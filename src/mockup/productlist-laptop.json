@@ -1,0 +1,139 @@
+{
+    "data": {
+        "_id": "646a4550d84afb72dd203f83",
+        "id": 1,
+        "description": "Laptop là một thiết bị máy tính có kích thước nhỏ gọn và di động. Nó được thiết kế để sử dụng trong các hoạt động làm việc, giải trí hoặc học tập khi di chuyển mà không cần phải sử dụng những chiếc máy tính để bàn cồng kềnh.",
+        "icon": "media/core/categories/2021/12/29/Rectangle 1461.png",
+        "name": "Laptop",
+        "sharedUrl": "laptop",
+        "slug": "laptop",
+        "thumbnail": "media/core/categories/2023/3/17/thumb-laptop.png",
+        "__v": 0,
+        "brands": [
+            {
+                "_id": "646a4550d84afb72dd203eab",
+                "id": 1,
+                "description": "Dell là thương hiệu nổi tiếng khi sở hữu nhiều sản phẩm laptop, phụ kiện, PC chất lượng cao với mức giá rất phải chăng. Các dòng laptop nổi bật và được ưa chuộng như Dell XPS, Dell Inspiron, Dell Vostro, Dell Latitude, Dell Alienware, Dell Gaming trải dài tới nhiều phân khúc khác nhau, dễ dàng lựa chọn và sử dụng",
+                "icon": "backend/uploads/brand/icon/2020/8/7/dell.png",
+                "name": "Dell",
+                "sharedUrl": "laptop-dell",
+                "slug": "dell",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eae",
+                "id": 11,
+                "description": "Acer là thương hiệu công nghệ nổi tiếng của Đài Loan được nhiều người tin dùng bởi những công nghệ thông minh. Acer đã tiếp cận thị trường Việt Nam với sản phẩm máy tính cá nhân vào năm 1996. Bên cạnh sản phẩm máy tính xách tay,  Acer còn sản xuất đồng hồ thông minh, máy tính bảng, màn hình và bàn phím,...",
+                "icon": "backend/uploads/brand/icon/2020/8/7/acer.png",
+                "name": "Acer",
+                "sharedUrl": "laptop-acer",
+                "slug": "acer",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eaf",
+                "id": 2,
+                "description": "Laptop HP trải dài tới nhiều phân khúc người dùng, đa dạng mức giá với nhiều cái tên nổi bật như HP Envy, HP Victus, HP Omen, ... Bên cạnh ngoại hình hợp thời, sang trọng, độ hoàn thiện của mẫu máy này cũng được đánh giá cao, đi kèm với đó là hiệu năng ổn định, xử lý nhanh gọn các tác vụ từ cơ bản tới chuyên sâu",
+                "icon": "backend/uploads/brand/icon/2020/8/7/hp.png",
+                "name": "HP",
+                "sharedUrl": "laptop-hp",
+                "slug": "hp",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb0",
+                "id": 31,
+                "description": "Luôn được chăm chút toàn diện cả về ngoại hình bên ngoài cho tới hiệu năng bên trong, laptop LG nhanh chóng \"phủ sóng\" rộng rãi tới nhiều phân khúc khách hàng, đặc biệt là những người theo chủ nghĩa \"xê dịch\", cần một chiếc máy tính xách tay gọn nhẹ nhưng vẫn đảm bảo được hiệu năng mạnh mẽ",
+                "icon": "backend/uploads/brand/icon/2020/8/7/lg.png",
+                "name": "LG",
+                "sharedUrl": "laptop-lg",
+                "slug": "lg",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb1",
+                "id": 5,
+                "description": "Microsoft là một sản phẩm đến từ tập đoàn đa quốc gia Microsoft của Hoa Kỳ. Đa phần các mẫu sản phẩm đến từ nhà Microsoft có kiểu dáng đơn giản nhưng vẫn giữ được nét thanh lịch và được trang bị đầy đủ các tính năng cơ bản.",
+                "icon": "backend/uploads/brand/icon/2020/8/7/microsoft.png",
+                "name": "Microsoft",
+                "sharedUrl": "laptop-microsoft",
+                "slug": "microsoft",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb2",
+                "id": 76,
+                "description": "Gigabyte Technology Co., Ltd. là một tậo đoàn chuyên sản xuất các thiết bị phần cứng máy tính có trụ sở ở Đài Loan. Các sản phẩm chủ lực của GIGABYTE bao gồm bo mạch chủ, card đồ họa, tản nhiệt, case máy tính và laptop.",
+                "icon": "media/core/brands/2023/3/17/logo-gigabyte-thinkpro-01.png",
+                "name": "GIGABYTE",
+                "sharedUrl": "laptop-gigabyte",
+                "slug": "gigabyte",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb3",
+                "id": 6,
+                "description": "Thương hiệu Apple là một trong những đế chế hùng mạnh của thế giới công nghệ. Tất cả các sản phẩm của Apple luôn nằm trong top danh sách những sản phẩm đáng mua nhất, từ laptop, PC, máy tính bảng cho đến smartphone, tất cả chúng đều có chung một điều đáng tự hào đó là mẫu mã cực kỳ đẹp.",
+                "icon": "backend/uploads/brand/icon/2020/8/7/apple.png",
+                "name": "Apple",
+                "sharedUrl": "laptop-apple",
+                "slug": "apple",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb4",
+                "id": 33,
+                "description": "MSI (tên đầy đủ: Micro-Star International Co., Ltd) - Một trong những hãng sản xuất Laptop Gaming lớn nhất Đài Loan. Năm 2015, Laptop MSI nằm trong TOP 4 những thương hiệu laptop chất lượng tốt nhất thế giới, bao gồm cả chất lượng sản phẩm, thiết kế, dịch vụ,...",
+                "icon": "media/core/brands/2023/3/17/logo-msi-thinkpro-01.png",
+                "name": "MSI",
+                "sharedUrl": "laptop-msi",
+                "slug": "msi",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb5",
+                "id": 80,
+                "description": "Huawei là một công ty đa quốc gia chuyên về lĩnh vực công nghệ có trụ sở chính của công ty đặt tại tỉnh Quảng Đông, Trung Quốc. Công ty này cung cấp rất nhiều các dòng sản phẩm điện tử bao gồm: điện thoại thông minh, máy tính bảng, laptop, đồng hồ thông minh,…",
+                "icon": "backend/uploads/brand/huawei-logo-thinkpro.jpg",
+                "name": "HUAWEI",
+                "sharedUrl": "laptop-huawei",
+                "slug": "huawei",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eac",
+                "id": 4,
+                "description": "Sở hữu thiết kế thanh lịch, tối giản cùng kiểu dáng đơn giản mà hiện đại, laptop Lenovo luôn đảm bảo được sự cứng cáp, trau chuốt trên từng đường nét. Đi kèm với đó là tổ hợp cấu hình mạnh mẽ, trang bị bộ vi xử lý tân tiến, thời lượng pin ấn tượng mang đến cho người dùng sự linh hoạt về thiết kế và mượt mà về hiệu năng",
+                "icon": "media/core/brands/2023/3/17/logo-lenovo-thinkpro-01.png",
+                "name": "Lenovo",
+                "sharedUrl": "laptop-lenovo",
+                "slug": "lenovo",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ead",
+                "id": 8,
+                "description": "ASUS luôn là thương hiệu được đánh giá cao về mọi mặt. Từng dòng sản phẩm của hãng đều sở hữu thiết kế phù hợp với người dùng mục tiêu, đi kèm với hiệu năng tốt, độ hoàn thiện xứng tầm tiền và nhiều tính năng dẫn đầu xu thế, thỏa mãn tính tò mò và ưa sự mới mẻ của người dùng hiện đại.",
+                "icon": "backend/uploads/brand/icon/2020/8/7/asus.png",
+                "name": "Asus",
+                "sharedUrl": "laptop-asus",
+                "slug": "asus",
+                "parentId": null,
+                "__v": 0
+            }
+        ]
+    },
+    "statusCode": 200,
+    "success": true,
+    "message": null
+}

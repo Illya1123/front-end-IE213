@@ -1,0 +1,150 @@
+{
+    "data": {
+        "_id": "646a4550d84afb72dd203f85",
+        "id": 7,
+        "description": "Bàn phím là một thiết bị đầu vào cho máy tính, được sử dụng để nhập dữ liệu và điều khiển các chức năng của máy tính. Bàn phím bao gồm một loạt các phím nhấn, các phím chữ, số, các ký tự đặc biệt và các phím chức năng để thực hiện các tác vụ.",
+        "icon": "media/core/categories/2021/12/29/Rectangle 1461-3.png",
+        "name": "Bàn phím",
+        "sharedUrl": "ban-phim",
+        "slug": "ban-phim",
+        "thumbnail": "media/core/categories/2023/3/17/thumb-ban-phim.png",
+        "__v": 0,
+        "brands": [
+            {
+                "_id": "646a4550d84afb72dd203eb6",
+                "id": 47,
+                "description": "Keychron là một là một thương hiệu bàn phím đến từ Hồng Kông. Bàn phím cơ của Keychron mang thiết kế đơn giản, dễ dùng, không chỉ hướng tới người dùng Windows mà còn rất tối ưu cho người dùng macOS.",
+                "icon": "media/core/brands/2023/3/17/logo-keychron-thinkpro-01.png",
+                "name": "Keychron",
+                "sharedUrl": "ban-phim-keychron",
+                "slug": "keychron",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb7",
+                "id": 84,
+                "description": "FL-Esport là thương hiệu đến từ Trung Quốc được thành lập vào năm 2004. FL-Esport là loại bàn phím cơ dành cho game thủ, có thiết kế độc đáo, các tính năng chuyên dụng cho game, như n-key rollover, macro keys và các switch cơ khác nhau,...",
+                "icon": "backend/uploads/brand/icon/2021/11/12/618e204718133_1636704327.png",
+                "name": "FL-ESPORT",
+                "sharedUrl": "ban-phim-fl-esport",
+                "slug": "fl-esport",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb8",
+                "id": 92,
+                "description": "IQUNIX là thương hiệu khá trẻ ở thị trường Việt Nam khi chỉ mới xuất hiện từ năm 2014. Sản phẩm chủ lực chủ lực của IQUNIX là bàn phím cơ và tập trung vào phân khúc tầm cao từ 3 triệu trở lên. Phím cơ IQUNIX có thiết kế độc đáo, định hình phong cách cho người dùng.",
+                "icon": "media/core/brands/2023/3/31/logo-IQUNIX-thinkpro-01.png",
+                "name": "IQUNIX",
+                "sharedUrl": "ban-phim-iqunix",
+                "slug": "iqunix",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eb9",
+                "id": 65,
+                "description": "AKKO là thương hiệu đình đám nổi lên tại Trung Quốc, được thiết kế và phát triển để phục vụ cộng đồng cộng đồng game thủ và người dùng bàn phím cơ chuyên nghiệp. Ưu điểm của bàn phím cơ AKKO là thiết kế thời trang, trẻ trung và rất đa dạng về màu sắc.",
+                "icon": "media/core/brands/2023/3/31/logo-akko-thinkpro-01.png",
+                "name": "Akko",
+                "sharedUrl": "ban-phim-akko",
+                "slug": "akko",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203eba",
+                "id": 79,
+                "description": "Nhắc đến Keydous thì thường mọi người đều biết tới đây là một thương hiệu bàn phím nối lên với những ưu điểm như được pre-build khá kỹ càng. Nó là tổng hòa của rất nhiều yếu tố, từ keycap, switch, foam,...",
+                "icon": "media/core/brands/2023/3/17/logo-keydous-thinkpro-03.png",
+                "name": "Keydous",
+                "sharedUrl": "ban-phim-keydous",
+                "slug": "keydous",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ebb",
+                "id": 14,
+                "description": "Logitech là thương hiệu nổi tiếng của Thụy Sĩ. Chuột và bàn phím máy tính là hai sản phẩm tạo nên \"chỗ đứng'' vững vàng trong ngành phụ kiện máy tính của Logitech. Những điểm đặc biệt của bàn phím Logitech là khả năng kháng nước, thiết kế tối giản, tổ hợp phím đa chức năng.",
+                "icon": "media/core/brands/2023/3/17/logo-logitech-thinkpro-01.png",
+                "name": "Logitech",
+                "sharedUrl": "ban-phim-logitech",
+                "slug": "logitech",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ebc",
+                "id": 83,
+                "description": "Mistel là một thương hiệu bàn phím chuyên về bàn phím cơ và bàn phím không dây. Công ty được thành lập tại Đài Loan vào năm 2008. Bàn phím Mistel được đánh giá là một trong những thương hiệu bàn phím chất lượng tốt với thiết kế độc đáo và các tính năng cao cấp, phù hợp cho các game thủ và những người dùng yêu thích bàn",
+                "icon": "media/core/brands/2023/3/17/logo-mistel-thinkpro-02.png",
+                "name": "Mistel",
+                "sharedUrl": "ban-phim-mistel",
+                "slug": "mistel",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ebd",
+                "id": 91,
+                "description": "HyperWork là thương hiệu ra đời từ năm 2021 với 6 dải phẩm chính bao gồm: Giá đỡ màn hình, Giá đỡ điện thoại/máy tính bảng/Laptop, ghế công thái học, Bàn phím & Chuột, Sạc dự phòng/Cáp sạc, đồ trang trí bằng gỗ.",
+                "icon": "media/core/brands/2022/1/18/Logo-HyperWork-black.png",
+                "name": "HyperWork",
+                "sharedUrl": "ban-phim-hyperwork",
+                "slug": "hyperwork",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ebe",
+                "id": 165,
+                "description": "Zuoya là một thương hiệu bàn phím cơ được sản xuất tại Trung Quốc. Bàn phím này được thiết kế để phục vụ cho nhu cầu chơi game và công việc văn phòng. Nó được tích hợp nhiều tính năng và tùy chọn, như các phím macro được tùy chỉnh, nhiều chế độ đèn LED cực sáng và tốc độ đáp ứng cao.",
+                "icon": "media/core/brands/2023/3/31/logo-Zuoya-thinkpro-01.png",
+                "name": "Zuoya",
+                "sharedUrl": "ban-phim-zuoya",
+                "slug": "zuoya",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ebf",
+                "id": 409,
+                "description": "JAMESDONKEY là nhà sản xuất chuyên nghiệp tập trung vào các sản phẩm ngoại vi máy tính, bao gồm bàn phím, chuột, tai nghe. Kể từ khi được thành lập vào ngày 14 tháng 2 năm 2014 tại Thâm Quyến Trung Quốc, chúng tôi kết hợp công nghệ mới nhất với kiểu dáng đẹp, tiện dụng.",
+                "icon": "media/core/brands/2023/3/31/logo-James-Donkey-thinkpro-01.png",
+                "name": "James Donkey",
+                "sharedUrl": "ban-phim-james-donkey",
+                "slug": "james-donkey",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ec0",
+                "id": 41,
+                "description": "Newmen là thương hiệu có trụ sở đặt tại Trung Quốc. Các mẫu sản phẩm đến từ thương hiệu này thường có thiết kế độc đáo và hiện đại, trải nghiệm gõ phím ấn tượng phù hợp với đa dạng sở thích của người dùng.",
+                "icon": "media/core/brands/2023/3/17/logo-newmen-thinkpro-01.png",
+                "name": "Newmen",
+                "sharedUrl": "ban-phim-newmen",
+                "slug": "newmen",
+                "parentId": null,
+                "__v": 0
+            },
+            {
+                "_id": "646a4550d84afb72dd203ec1",
+                "id": 157,
+                "description": "Monsgeek là một thương hiệu con của AKKO. Các sản phẩm được biết đến với thiết kế chắc chắn và các tính năng tốt, phù hợp với những người yêu thích công nghệ và muốn sở hữu một sản phẩm bàn phím cơ cao cấp.",
+                "icon": "media/core/brands/2022/12/8/魔极客LOGO-11.png",
+                "name": "Monsgeek",
+                "sharedUrl": "ban-phim-monsgeek",
+                "slug": "monsgeek",
+                "parentId": null,
+                "__v": 0
+            }
+        ]
+    },
+    "statusCode": 200,
+    "success": true,
+    "message": null
+}

@@ -1,0 +1,323 @@
+{
+    "data": {
+        "products": [
+            {
+                "_id": "64761c319760f84012d880c3",
+                "skuId": 5528,
+                "productId": 2187,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/gia-do-man-hinh-human-motion-t9-pro-5528",
+                "slug": "gia-do-man-hinh-human-motion-t9-pro-humanmotiont9pro01cf",
+                "image": "media/core/products/2022/11/11/gia-do-man-hinh-human-motion-t9-pro-thinkpro-4.png",
+                "name": "Arm màn hình Human Motion T9 Pro",
+                "colors": [
+                    {
+                        "name": "Xám",
+                        "code": "#bebebe"
+                    },
+                    {
+                        "name": "Trắng",
+                        "code": "#ffffff"
+                    }
+                ],
+                "price": 1790000,
+                "modelValues": [
+                    "",
+                    "Xám",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880c4",
+                "skuId": 5830,
+                "productId": 2324,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/gia-do-man-hinh-doi-human-motion-t6-pro-dual-5830",
+                "slug": "gia-do-man-hinh-doi-human-motion-t6-pro-dual-humanmotiont6produal01cf",
+                "image": "media/core/products/2022/12/6/arm-man-hinh-t6-pro-thinkpro-den-01.png",
+                "name": "Arm màn hình đôi Human Motion T6 Pro - Dual",
+                "colors": [
+                    {
+                        "name": "Đen",
+                        "code": "#000000"
+                    },
+                    {
+                        "name": "Trắng",
+                        "code": "#ffffff"
+                    }
+                ],
+                "price": 1150000,
+                "modelValues": [
+                    "",
+                    "Đen",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880c5",
+                "skuId": 5146,
+                "productId": 2059,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/human-motion-m8-5146",
+                "slug": "arm-man-hinh-human-motion-m8-arm-doi",
+                "image": "media/core/products/2022/9/25/humanmotion-m8-2.png",
+                "name": "Arm Màn Hình Human Motion M8",
+                "colors": [
+                    {
+                        "name": "Night Black",
+                        "code": "#000000"
+                    }
+                ],
+                "price": 1490000,
+                "modelValues": [
+                    "",
+                    "Night Black",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880c6",
+                "skuId": 5039,
+                "productId": 2018,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/hyperwork-a1c-5039",
+                "slug": "arm-man-hinh-hyperwork-a1c-black",
+                "image": "media/core/products/2022/9/15/dden-hyperwork.png",
+                "name": "Arm màn hình HyperWork A1C",
+                "colors": [
+                    {
+                        "name": "Off Black",
+                        "code": "#000000"
+                    }
+                ],
+                "price": 1290000,
+                "modelValues": [
+                    "",
+                    "Off Black",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 91,
+                    "description": "HyperWork là thương hiệu ra đời từ năm 2021 với 6 dải phẩm chính bao gồm: Giá đỡ màn hình, Giá đỡ điện thoại/máy tính bảng/Laptop, ghế công thái học, Bàn phím & Chuột, Sạc dự phòng/Cáp sạc, đồ trang trí bằng gỗ.",
+                    "icon": "media/core/brands/2022/1/18/Logo-HyperWork-black.png",
+                    "name": "HyperWork",
+                    "sharedUrl": "ban-phim-hyperwork",
+                    "slug": "hyperwork",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880c7",
+                "skuId": 6582,
+                "productId": 2561,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/arm-man-hinh-human-motion-t9-pro-ii-series-6582",
+                "slug": "arm-man-hinh-human-motion-t9-pro-ii-humanmotiont9proii01cf",
+                "image": "media/core/products/2023/4/25/arm-man-hinh-human-motion-t9-pro-ii-thinkpro.png",
+                "name": "Arm màn hình Human Motion T9 Pro II Series",
+                "colors": [
+                    {
+                        "name": "Gray",
+                        "code": "#B2AFAF"
+                    },
+                    {
+                        "name": "White",
+                        "code": "#FFFFFF"
+                    },
+                    {
+                        "name": "Gray",
+                        "code": "#bebebe"
+                    }
+                ],
+                "price": 1990000,
+                "modelValues": [
+                    "Arm đơn",
+                    "Gray",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880c8",
+                "skuId": 3830,
+                "productId": 1490,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/arm-man-hinh-human-motion-t9-3830",
+                "slug": "arm-man-hinh-human-motion-t9-t9-1h-pro-thunder-snake",
+                "image": "media/core/products/2022/3/10/T9_01.png",
+                "name": "Arm màn hình Human Motion T9",
+                "colors": [
+                    {
+                        "name": "Gray",
+                        "code": "#bebebe"
+                    }
+                ],
+                "price": 1650000,
+                "modelValues": [
+                    "Arm đơn",
+                    "Gray",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880c9",
+                "skuId": 3828,
+                "productId": 1489,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/human-motion-t6-3828",
+                "slug": "arm-man-hinh-human-motion-t6-pro-black",
+                "image": "media/core/products/2022/6/19/T6-13.png",
+                "name": "Arm màn hình Human Motion T6 Pro",
+                "colors": [
+                    {
+                        "name": "Đen",
+                        "code": "#000000"
+                    },
+                    {
+                        "name": "Frost White",
+                        "code": "#FFFFFF"
+                    }
+                ],
+                "price": 790000,
+                "modelValues": [
+                    "",
+                    "Đen",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880ca",
+                "skuId": 3826,
+                "productId": 1487,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/human-motion-t7-3826",
+                "slug": "arm-man-hinh-human-motion-t7-graphite",
+                "image": "media/core/products/2022/3/10/T7-01.png",
+                "name": "Arm màn hình Human Motion T7",
+                "colors": [
+                    {
+                        "name": "Graphite",
+                        "code": "#201F1F"
+                    }
+                ],
+                "price": 1550000,
+                "modelValues": [
+                    "",
+                    "Graphite",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            },
+            {
+                "_id": "64761c319760f84012d880cb",
+                "skuId": 3824,
+                "productId": 1486,
+                "categoryId": 28,
+                "sharedUrl": "arm-man-hinh/human-motion-t2-3824",
+                "slug": "arm-man-hinh-human-motion-t2-white",
+                "image": "media/core/products/2022/3/10/T2_01.png",
+                "name": "Arm màn hình Human Motion T2",
+                "colors": [
+                    {
+                        "name": "Frost White",
+                        "code": "#FFFFFF"
+                    }
+                ],
+                "price": 1390000,
+                "modelValues": [
+                    "",
+                    "Frost White",
+                    "Mới, Full box, Chính hãng"
+                ],
+                "brand": {
+                    "id": 95,
+                    "description": "HumanMotion là thương hiệu arm màn hình mới nổi trong một năm trở lại đây tại thị trường Việt Nam. Arm màn hình Human Motion tạo được sức hút lớn và trở thành một trong những lựa chọn hàng đầu của anh em đam mê công nghệ và setup.",
+                    "icon": "media/core/brands/2022/3/9/Logo-HumanMotion-xanh.png",
+                    "name": "Humanmotion",
+                    "sharedUrl": "arm-man-hinh-humanmotion",
+                    "slug": "humanmotion",
+                    "parentId": null
+                },
+                "__v": 0
+            }
+        ],
+        "meta": {
+            "total": 9,
+            "currentPage": 1,
+            "perPage": 12,
+            "lastPage": 1
+        }
+    },
+    "statusCode": 200,
+    "success": true,
+    "message": null
+}

@@ -1,0 +1,139 @@
+{
+    "data": [
+        {
+            "_id": "646a4550d84afb72dd203f83",
+            "id": 1,
+            "description": "Laptop là một thiết bị máy tính có kích thước nhỏ gọn và di động. Nó được thiết kế để sử dụng trong các hoạt động làm việc, giải trí hoặc học tập khi di chuyển mà không cần phải sử dụng những chiếc máy tính để bàn cồng kềnh.",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461.png",
+            "name": "Laptop",
+            "sharedUrl": "laptop",
+            "slug": "laptop",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-laptop.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f85",
+            "id": 7,
+            "description": "Bàn phím là một thiết bị đầu vào cho máy tính, được sử dụng để nhập dữ liệu và điều khiển các chức năng của máy tính. Bàn phím bao gồm một loạt các phím nhấn, các phím chữ, số, các ký tự đặc biệt và các phím chức năng để thực hiện các tác vụ.",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-3.png",
+            "name": "Bàn phím",
+            "sharedUrl": "ban-phim",
+            "slug": "ban-phim",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-ban-phim.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f86",
+            "id": 8,
+            "description": "Chuột máy tính một thiết bị ngoại vi được sử dụng để điều khiển con trỏ trên màn hình máy tính và thực hiện các thao tác trên giao diện đồ họa. Chuột thông thường được thiết kế nhỏ gọn, có hai, ba hoặc nhiều nút nhấn với bánh xe cuộn được đặt giữa hai nút",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-2.png",
+            "name": "Chuột",
+            "sharedUrl": "chuot",
+            "slug": "chuot",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-chuot.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f88",
+            "id": 11,
+            "description": "Cổng chuyển (hay còn gọi là cổng kết nối) là một cổng truyền thông được sử dụng để chuyển đổi tín hiệu từ một loại giao diện sang một loại giao diện khác. Các cổng chuyển thường được sử dụng trong các thiết bị điện tử như máy tính, laptop, máy chiếu và cá",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-8.png",
+            "name": "Cổng chuyển",
+            "sharedUrl": "cong-chuyen",
+            "slug": "cong-chuyen",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-cong-chuyen.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f8a",
+            "id": 13,
+            "description": "Microsoft là một công ty sản xuất phần mềm lớn nhất thế giới, có trụ sở chính tại Mỹ. Các sản phẩm phần mềm của Microsoft bao gồm hệ điều hành Windows, các ứng dụng văn phòng như Microsoft Office (Word, Excel, PowerPoint, Outlook) và các sản phẩm khác như",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-14.png",
+            "name": "Phần mềm",
+            "sharedUrl": "phan-mem",
+            "slug": "phan-mem",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-phan-mem.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f8b",
+            "id": 19,
+            "description": "Màn hình máy tính (Computer display, Visual display unit hay Monitor) là thiết bị điện tử dùng để kết nối với máy tính nhằm mục đích hiển thị và phục vụ cho quá trình giao tiếp giữa người sử dụng với máy tính..",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-7.png",
+            "name": "Màn hình",
+            "sharedUrl": "man-hinh",
+            "slug": "man-hinh",
+            "thumbnail": "media/core/categories/2022/1/15/Màn hình PC.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f8c",
+            "id": 20,
+            "description": "Máy chơi game là một thiết bị điện tử được thiết kế để chơi các trò chơi điện tử. Máy chơi game có thể được chia thành hai loại chính: máy chơi game cầm tay và máy chơi game để bàn.",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-2 copy.png",
+            "name": "Máy chơi game",
+            "sharedUrl": "may-choi-game",
+            "slug": "may-choi-game",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-may-choi-game.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f8d",
+            "id": 21,
+            "description": "Ghế công thái học là mẫu ghế được thiết kế với hình dáng và các tính năng đặc biệt, giúp giảm thiểu áp lực lên cơ thể, giảm đau lưng và cổ và giúp người sử dụng giữ được tư thế ngồi đúng để tránh những tổn thương do ngồi lâu.",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-1 copy.png",
+            "name": "Ghế công thái học",
+            "sharedUrl": "ghe-cong-thai-hoc",
+            "slug": "ghe-cong-thai-hoc",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-ghe-cong-thai-hoc-01.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f92",
+            "id": 27,
+            "description": "Âm thanh hay loa là một thiết bị điện tử được sử dụng để phát ra âm thanh. Nó bao gồm các thành phần khác như màng lọc tần số, bộ khuếch đại, điều khiển âm lượng,.. Loa có thể kết nối được với các thiết bị phát âm thanh thông qua dây cáp hoặc kết nối khôn",
+            "icon": "media/core/categories/2021/12/29/Rectangle 1461-5.png",
+            "name": "Âm thanh",
+            "sharedUrl": "am-thanh",
+            "slug": "am-thanh",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-am-thanh.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f93",
+            "id": 28,
+            "description": "Arm màn hình là một “tay đỡ” để giữ màn hình máy tính ở vị trí mong muốn. Các loại Arm này thường được thiết kế giúp người dùng điều chỉnh độ cao, góc độ và khoảng cách giữa màn hình và mắt, nhằm tạo ra vị trí làm việc thoải mái và thuận tiện hơn.",
+            "icon": "media/core/categories/2022/3/15/arm-man-hinh-gia-tot-thinkpro.png",
+            "name": "Arm màn hình",
+            "sharedUrl": "arm-man-hinh",
+            "slug": "arm-man-hinh",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-arm-man-hinh.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f94",
+            "id": 30,
+            "description": "Phụ kiện & Setup bao gồm nhiều sản phẩm khác nhau, phục vụ đa nhu cầu của người dùng. Một số phụ kiện đáng chú ý như: kê tay bàn phím, ốp lưng, dán màn hình, phủ phím, ...",
+            "icon": "media/core/categories/2023/3/30/phu-kien-va-setup-thinkpro.png",
+            "name": "Phụ kiện & Setup",
+            "sharedUrl": "phu-kien-va-setup",
+            "slug": "phu-kien-va-setup",
+            "thumbnail": "media/core/categories/2023/3/30/phu-kien-va-setup-thinkpro-2.png",
+            "__v": 0
+        },
+        {
+            "_id": "646a4550d84afb72dd203f8e",
+            "id": 22,
+            "description": "Bàn nâng hạ về cơ bản vẫn là bàn làm việc bình thường, tuy nhiên nó có cấu tạo đặc biệt ở hai chân bàn với các thanh khớp nối lồng vào nhau. Nhờ cấu trúc đặc biệt kết hợp động cơ nâng hạ được lồng vào chân bản giúp nó có thể thu các khớp nối vào để hạ chi",
+            "icon": "media/core/categories/2023/3/18/logo-ban-nang-ha-thinkpro-01.png",
+            "name": "Bàn nâng hạ",
+            "sharedUrl": "ban-nang-ha",
+            "slug": "ban-nang-ha",
+            "thumbnail": "media/core/categories/2023/3/17/thumb-ban-nang-ha.png",
+            "__v": 0
+        }
+    ],
+    "statusCode": 200,
+    "success": true,
+    "message": null
+}
