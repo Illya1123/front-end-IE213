@@ -1,51 +1,48 @@
 import "./product-detail.scss";
+import "./payment.scss";
 import { Pagination, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import http from "../../utils/request";
 import Counter from "./counter";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+
 const ProductDetail = (props) => {
+  const { productInfo } = window.location.state || {};
   const { id } = useParams();
-  const [product, setProduct] = useState({
-    SKU: "",
-    assets: [
-      {
-        src: "",
-        alt: "alt",
-      },
-    ],
-    article: {
-      title: "",
-      description: "",
-      content: "",
-    },
-    model: {
-      name: "",
-      slug: "",
-      price: "",
-    },
-    attributes: [
-      {
-        groupName: '',
-        items: []
-      }
-    ],
-    variations:[]
-  });
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
   const [imageSelected, setImageSelected] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const handleOptionChange = (optionName, optionValue) => {
+  setSelectedOptions({...selectedOptions, [optionName]: optionValue });
+};
+  const handleBuyNow = () => {
+    navigate(`/payment/${id}`);
+  };
+
   useEffect(() => {
-    http.get(`/products/details?skuId=${id}`).then((res) => {
-      setProduct(res.data);
-      setImageSelected(res.data.assets[0].src);
-    });
+    const fetchProduct = async () => {
+      try {
+        const response = await http.get(`/products/details?skuId=${id}`);
+        setProduct(response.data);
+        setImageSelected(response.data.assets[0].src);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
-  
+
   const handlePreviewImage = (url) => {
     Swal.fire({
       width: '1200px',
@@ -58,6 +55,15 @@ const ProductDetail = (props) => {
       `,
     })
   }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
       <div className="container mt-3">
@@ -96,14 +102,16 @@ const ProductDetail = (props) => {
                     >
                       <div
                         className={
-                          image.src === imageSelected ? "img-selected  hover-c" : "hover-c"
+                          image.src === imageSelected? 'img-selected  hover-c' : 'hover-c'
                         }
-                      >
-                        <img
-                          src={`https://images.thinkgroup.vn/unsafe/212x212/https://media-api-beta.thinkpro.vn/${image.src}`}
-                          alt="section-banner"
-                        />
-                      </div>
+                        style={{
+                          backgroundImage: `url(${image.src})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          width: '100%',
+                          height: '100%',
+                        }}
+                      />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -111,33 +119,33 @@ const ProductDetail = (props) => {
             </div>
           </div>
           <div className="col-5">
-          <div className="card">
+            <div className="card">
               <div className="card-body">
                 <p>SKU: {product.SKU}</p>
                 <p>
                   <strong>{product.model.name}</strong>
                 </p>
                 <hr />
-                <div className="variable" style={{fontSize: '14px'}}>
-                  {
-                    product.variations.map((item) => (
-                      <div className="mt-3" key={item.name}>
-                        <h3 style={{fontSize: '16px', opacity: 0.9}}>{item.label}</h3>
-                        <div className="d-flex flex-wrap gx-3 gy-3" style={{margin: 0}}>
-                          {
-                            item.options.map((option) => (
-                              <div className="alert alert-secondary bg-white text-center m-1 px-3 py-1" key={option.name}>
-                                {option.name}
-                              </div>
-                            ))
-                          }
-                        </div>
-                      </div>
-                    ))
-                  }
+                <div className="variable" style={{ fontSize: '14px' }}>
+                  {product.variations.map((item) => (
+  <div className="variable" key={item.name}>
+    <h3 style={{ fontSize: '16px', opacity: 0.9 }}>{item.label}</h3>
+    <div className="d-flex flex-wrap gx-3 gy-3" style={{ margin: 0 }}>
+      {item.options.map((option) => (
+        <div
+          className="alert alert-secondary bg-white text-center m-1 px-3 py-1"
+          key={option.name}
+          onClick={() => handleOptionChange(item.name, option.name)}
+        >
+          {option.name}
+        </div>
+      ))}
+    </div>
+  </div>
+))}
                 </div>
                 <div className="counter mt-3">
-                  <h3 style={{fontSize: '16px', opacity: 0.9}}>Số lượng</h3>
+                  <h3 style={{ fontSize: '16px', opacity: 0.9 }}>Số lượng</h3>
                   <div className="d-flex">
                     <Counter />
                   </div>
@@ -161,6 +169,7 @@ const ProductDetail = (props) => {
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "8px", fontWeight: "500" }}
+                    onClick={handleBuyNow}
                   >
                     Mua ngay
                   </button>
@@ -175,7 +184,7 @@ const ProductDetail = (props) => {
             <div className="card-body">
               <h2 style={{ fontSize: "1.6em" }}>Cấu hình đặc điểm</h2>
               <div className="row" style={{ fontSize: "0.9em" }}>
-                {product.attributes.map(attribute =>(
+                {product.attributes.map(attribute => (
                   <div className="col-6 mt-3" key={attribute.groupName}>
                     <p>
                       <strong>{attribute.groupName}</strong>
@@ -185,7 +194,7 @@ const ProductDetail = (props) => {
                         <p key={item.label}>
                           <span>{item.label}</span> : <span> {item.value}</span>
                         </p>
-                      )) 
+                      ))
                     }
                   </div>
                 ))}
@@ -213,7 +222,7 @@ const ProductDetail = (props) => {
                   </section>
                 ) : '-- chưa có mô tả --'
               }
-              
+
             </div>
           </div>
         </div>
@@ -223,3 +232,4 @@ const ProductDetail = (props) => {
 };
 
 export default ProductDetail;
+

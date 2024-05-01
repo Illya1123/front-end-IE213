@@ -4,7 +4,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyProviders from './context';
 import { FullLayout} from "./layouts";
-import { Home, ProductDetail, ProductList, About, PageNotFound, Register } from "./pages";
+import { Home, ProductDetail, ProductList, About, PageNotFound, Register} from "./pages";
+import PaymentPage from "./pages/product/PaymentPage"
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
         element: <Register />
       },
       {
+        path:'payment/:id',
+        element: <PaymentPage />
+      },
+      {
         path: '',
         element: <Home />
       }
@@ -51,3 +57,4 @@ function App() {
 }
 
 export default App;
+
