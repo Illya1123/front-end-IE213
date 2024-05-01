@@ -21,8 +21,8 @@ const ProductDetail = (props) => {
   const [error, setError] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
   const handleOptionChange = (optionName, optionValue) => {
-  setSelectedOptions({...selectedOptions, [optionName]: optionValue });
-};
+    setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
+  };
   const handleBuyNow = () => {
     navigate(`/payment/${id}`);
   };
@@ -102,7 +102,7 @@ const ProductDetail = (props) => {
                     >
                       <div
                         className={
-                          image.src === imageSelected? 'img-selected  hover-c' : 'hover-c'
+                          image.src === imageSelected ? 'img-selected  hover-c' : 'hover-c'
                         }
                         style={{
                           backgroundImage: `url(${image.src})`,
@@ -128,21 +128,21 @@ const ProductDetail = (props) => {
                 <hr />
                 <div className="variable" style={{ fontSize: '14px' }}>
                   {product.variations.map((item) => (
-  <div className="variable" key={item.name}>
-    <h3 style={{ fontSize: '16px', opacity: 0.9 }}>{item.label}</h3>
-    <div className="d-flex flex-wrap gx-3 gy-3" style={{ margin: 0 }}>
-      {item.options.map((option) => (
-        <div
-          className="alert alert-secondary bg-white text-center m-1 px-3 py-1"
-          key={option.name}
-          onClick={() => handleOptionChange(item.name, option.name)}
-        >
-          {option.name}
-        </div>
-      ))}
-    </div>
-  </div>
-))}
+                    <div className="variable" key={item.name}>
+                      <h3 style={{ fontSize: '16px', opacity: 0.9 }}>{item.label}</h3>
+                      <div className="d-flex flex-wrap gx-3 gy-3" style={{ margin: 0 }}>
+                        {item.options.map((option) => (
+                          <div
+                            className="alert alert-secondary bg-white text-center m-1 px-3 py-1"
+                            key={option.name}
+                            onClick={() => handleOptionChange(item.name, option.name)}
+                          >
+                            {option.name}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
                 <div className="counter mt-3">
                   <h3 style={{ fontSize: '16px', opacity: 0.9 }}>Số lượng</h3>
@@ -168,7 +168,7 @@ const ProductDetail = (props) => {
                   <button className="btn btn-add-cart">Thêm vào giỏ</button>
                   <button
                     className="btn btn-danger"
-                    style={{ marginLeft: "8px", fontWeight: "500" }}
+                    style={{ marginLeft: "8px", fontWeight: "bold" }}
                     onClick={handleBuyNow}
                   >
                     Mua ngay

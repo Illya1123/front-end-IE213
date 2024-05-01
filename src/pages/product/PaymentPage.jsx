@@ -101,19 +101,19 @@ const PaymentPage = () => {
     if (selectedMethod === 'bankTransfer') {
       return (
         <div>
-          <h2 style={{ textAlign: 'center' }}>Thông tin chuyển khoản ngân hàng</h2>
-          <h3 style={{ textAlign: 'center' }}> Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh toán</h3>
-          <div style={{ marginLeft: '150px' }}>
+          <h3 style={{ textAlign: 'center' }}>Thông tin chuyển khoản ngân hàng</h3>
+          <h5 style={{ textAlign: 'center',marginBottom: '40px' }}>  <i>Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh toán</i></h5>
+          <div>
             <p><b>Tên tài khoản:</b> Lê Quốc Anh</p> <br></br>
             <p><b>Số tài khoản:</b> 0815929695</p> <br></br>
             <p><b>Ngân hàng:</b> TMCP Việt Nam Thịnh Vượng - Ngân hàng số CAKE by VPBank</p> <br></br>
             <p><b>Nội dung*:<i> ProShopCamOn </i></b></p> <br></br>
           </div>
           <div className="form-group form-spacing">
-            <label htmlFor="bankAccount"><b>Số tài khoản ngân hàng:</b></label>
+            <label htmlFor="bankAccount" style={{ width: '200px', display: 'inline-block' }}><b>Số tài khoản ngân hàng:</b></label>
             <input
               type="text"
-              className="form-control-3"
+              className="form-control"
               id="bankAccount"
               name="bankAccount"
               value={bankAccount}
@@ -121,19 +121,19 @@ const PaymentPage = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="name"><b>Họ và tên:</b></label>
+            <label htmlFor="name" style={{ width: '200px', display: 'inline-block' }}><b>Họ và tên:</b></label>
             <input
               type="text"
-              className="form-control-3"
+              className="form-control"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="bank"><b>Ngân hàng:</b></label>
+            <label htmlFor="bank" style={{ width: '200px', display: 'inline-block' }}><b>Ngân hàng:</b></label>
             <select
-              className="form-control-3"
+              className="form-control"
               value={bank}
               onChange={(e) => setBank(e.target.value)}
             >
@@ -151,10 +151,10 @@ const PaymentPage = () => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="transferContent"><b>Nội dung chuyển khoản:</b></label>
+            <label htmlFor="transferContent" style={{ width: '200px', display: 'inline-block' }}><b>Nội dung chuyển khoản:</b></label>
             <input
               type="text"
-              className="form-control-3"
+              className="form-control"
               id="transferContent"
               value={transferContent}
               onChange={(e) => setTransferContent(e.target.value)}
@@ -166,30 +166,30 @@ const PaymentPage = () => {
       return (
         <div>
           <div className="form-group">
-            <label htmlFor="cardNumber"><b>Số thẻ:</b></label>
+            <label htmlFor="cardNumber" style={{ width: '150px', display: 'inline-block' }}><b>Số thẻ:</b></label>
             <input
               type="text"
-              className="form-control-2"
+              className="form-control"
               id="cardNumber"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="expiryDate"><b>Ngày hết hạn:</b></label>
+            <label htmlFor="expiryDate"style={{ width: '150px', display: 'inline-block' }}><b>Ngày hết hạn:</b></label>
             <input
               type="text"
-              className="form-control-2"
+              className="form-control"
               id="expiryDate"
               value={expiryDate}
               onChange={(e) => setExpiryDate(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="cvv"><b>Mã CVV:</b></label>
+            <label htmlFor="cvv" style={{ width: '150px', display: 'inline-block' }}><b>Mã CVV:</b></label>
             <input
               type="text"
-              className="form-control-2"
+              className="form-control"
               id="cvv"
               value={cvv}
               onChange={(e) => setCvv(e.target.value)}
@@ -213,18 +213,18 @@ const PaymentPage = () => {
     } else if (selectedMethod === 'ewallet') {
       return (
         <div>
-          <h2 style={{ textAlign: 'center' }}>Thông tin chuyển khoản ngân hàng</h2>
-          <h3 style={{ textAlign: 'center' }}> Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh toán</h3>
-          <div style={{ marginLeft: '150px' }}>
+          <h3 style={{ textAlign: 'center' }}>Thông tin chuyển khoản ngân hàng</h3>
+          <h5 style={{ textAlign: 'center', marginBottom: '40px' }}> <i>Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh toán</i></h5>
+          <div>
             <p><b>Tên tài khoản:</b> Lê Quốc Anh</p> <br></br>
             <p><b>Số tài khoản:</b> 0815929695</p> <br></br>
             <p><b>Ngân hàng:</b> TMCP Việt Nam Thịnh Vượng - Ngân hàng số CAKE by VPBank</p> <br></br>
             <p><b>Nội dung*:<i> ProShopCamOn </i></b></p> <br></br>
           </div>
           <div className="form-group">
-            <label htmlFor="ewallet"><b>Ví điện tử:</b></label>
+            <label htmlFor="ewallet" style={{ width: '200px', display: 'inline-block' }}><b>Ví điện tử:</b></label>
             <select
-              className="form-control-3"
+              className="form-control"
               value={ewallet}
               onChange={(e) => setEwallet(e.target.value)}
             >
@@ -236,20 +236,20 @@ const PaymentPage = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="ewalletPhoneNumber"><b>Số điện thoại:</b></label>
+            <label htmlFor="ewalletPhoneNumber" style={{ width: '200px', display: 'inline-block' }}><b>Số điện thoại:</b></label>
             <input
               type="text"
-              className="form-control-3"
+              className="form-control"
               id="ewalletPhoneNumber"
               value={ewalletPhoneNumber}
               onChange={(e) => setEwalletPhoneNumber(e.target.value)}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="transferContent"><b>Nội dung chuyển khoản:</b></label>
+            <label htmlFor="transferContent" style={{ width: '200px', display: 'inline-block' }}><b>Nội dung chuyển khoản:</b></label>
             <input
               type="text"
-              className="form-control-3"
+              className="form-control"
               id="transferContent"
               value={transferContent}
               onChange={(e) => setTransferContent(e.target.value)}
@@ -276,103 +276,111 @@ const PaymentPage = () => {
     <div className="background-container">
       <div className="container">
         <div className="row justify-content-center align-items-center" style={{ height: '200vh' }}>
-          <div className="col-8">
+         
             <h1 className="text-center">THANH TOÁN</h1>
+            <div className="col-md-7 custom-column" style={{ height: '100%' }}>
             <h3>1. Thông tin khách hàng:</h3>
             <div className="form-group">
-              <label htmlFor="buyerName"><b>Họ và tên:</b></label>
+              <label htmlFor="buyerName" style={{ width: '150px', display: 'inline-block' }}><b>Họ và tên:</b></label>
               <input
                 type="text"
-                className="form-control-3"
+                className="form-control"
                 id="buyerName"
                 value={buyerName}
                 onChange={(e) => setBuyerName(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phoneNumber"><b>Số điện thoại:</b></label>
+              <label htmlFor="phoneNumber" style={{ width: '150px', display: 'inline-block' }}><b>Số điện thoại:</b></label>
               <input
                 type="text"
-                className="form-control-3"
+                className="form-control"
                 id="phoneNumber"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="address"><b>Địa chỉ:</b></label>
+              <label htmlFor="address" style={{ width: '150px', display: 'inline-block' }}><b>Địa chỉ:</b></label>
               <input
                 type="text"
-                className="form-control-3"
+                className="form-control"
                 id="address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <h3 style = {{marginTop:'50px'}}>2. Thông tin sản phẩm: </h3>
-
+            <h3 style={{ marginTop: '50px' }}>2. Thông tin sản phẩm: </h3>
             <div className="form-group">
-              <label htmlFor="productName"><b>Tên sản phẩm:</b></label>
+              <label htmlFor="productName" style={{ width: '150px', display: 'inline-block' }}><b>Tên sản phẩm:</b></label>
               <input
                 type="text"
-                className="form-control-3"
+                className="form-control"
                 id="productName"
                 value={productInfo.name}
                 disabled
               />
             </div>
             <p>Số lượng: {productQuantity}</p>
-            {/* <p>Total: {totalPrice}</p> */}
-
-
-            <h3 style = {{marginTop:'50px'}}>3. Phương thức thanh toán</h3> <br></br>
-            <select
-              className="form-control-1"
-              value={selectedMethod}
-              onChange={(e) => setSelectedMethod(e.target.value)}
-            >
-              <option value="">Chọn phương thức thanh toán</option>
-              <option value="cash">Tiền mặt</option>
-              <option value="bankTransfer">Chuyển khoản</option>
-              <option value="atmCard">Thẻ ATM</option>
-              <option value="internationalCard">Thẻ quốc tế</option>
-              <option value="qrCode">Mã QR</option>
-              <option value="ewallet">Ví điện tử</option>
-            </select>
-
-            <div className="text-center">
-              {renderPaymentForm()}
-            </div>
-            <div className="text-center">
-              <button className="btn btn-primary" onClick={() => handlePayment(productName, productQuantity)}
-                style={{ height: '40px', width: '200px', fontSize: '17px', marginTop: '10px', fontWeight: 'bold' }}
-              >
-                Thanh toán
-              </button>
-            </div>
-            <Modal
-              isOpen={isModalOpen}
-              onRequestClose={() => setIsModalOpen(false)}
-              style={{
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)'
-                },
-                content: {
-                  width: '700px',
-                  height: '500px',
-                  margin: 'auto',
-                  textAlign: 'center',
-                  fontSize: '17px'
-                }
-              }}
-            >
-              <h3 style={{ textAlign: 'center' }}>Thông báo thanh toán</h3>
-              <p style={{ fontSize: '22px' }}><b>{paymentResult}</b></p>
-              <p><b>Thông tin khách hàng:</b> {buyerName}, {phoneNumber}, {address}</p>
-              <p><b>Thông tin sản phẩm:</b> {productInfo.name},  {productQuantity}</p>
-              <button onClick={(event) => { event.preventDefault(); setIsModalOpen(false); }} style={{ height: '30px', width: '60px' }}>OK</button>
-            </Modal>
           </div>
+          <div className="col-md-1 custom-column"></div>
+          <div className="col-md-4 custom-column" style={{ height: '100%' }}>
+            <div className="d-flex flex-column align-items-center">
+              <h3>3. Phương thức thanh toán</h3>
+              <select
+                className="form-control"
+                value={selectedMethod}
+                onChange={(e) => setSelectedMethod(e.target.value)}
+              >
+                <option value="">Chọn phương thức thanh toán</option>
+                <option value="cash">Tiền mặt</option>
+                <option value="bankTransfer">Chuyển khoản</option>
+                <option value="atmCard">Thẻ ATM</option>
+                <option value="internationalCard">Thẻ quốc tế</option>
+                <option value="qrCode">Mã QR</option>
+                <option value="ewallet">Ví điện tử</option>
+              </select>
+              <div className="text-center mt-4">
+                {renderPaymentForm()}
+              </div>
+              <div className="text-center mt-4">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handlePayment(productName, productQuantity)}
+                  style={{
+                    height: '40px',
+                    width: '200px',
+                    fontSize: '17px',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Thanh toán
+                </button>
+              </div>
+            </div>
+          </div>
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            style={{
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.5)'
+              },
+              content: {
+                width: '700px',
+                height: '500px',
+                margin: 'auto',
+                textAlign: 'center',
+                fontSize: '17px'
+              }
+            }}
+          >
+            <h3 style={{ textAlign: 'center', marginBottom: '30px' }}>Thông báo thanh toán</h3>
+            <p style={{ fontSize: '22px', marginBottom: '20px' }}><b>{paymentResult}</b></p>
+            <p><i><b>Thông tin khách hàng:</b> {buyerName}, {phoneNumber}, {address}</i></p>
+            <p><i><b>Thông tin sản phẩm:</b> {productInfo.name}, {productQuantity}</i></p>
+            <button onClick={(event) => { event.preventDefault(); setIsModalOpen(false); }} style={{ height: '30px', width: '60px' }}>OK</button>
+          </Modal>
         </div>
       </div>
     </div>

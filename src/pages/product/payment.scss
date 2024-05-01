@@ -10,7 +10,6 @@ $primary-color: #dfe6e9;
     padding: 10px;
     margin-left: 200px;
     margin-right: 200px; 
-    margin-bottom: 200px; 
   }
 
 .text-center {
@@ -34,17 +33,23 @@ $primary-color: #dfe6e9;
 }
 h3{
     font-size: 23px;
-    margin-top: '50px';
+    
 }
 p {
     font-size: 20px;
     
 }
-.form-control-1{
-    height: 30px;
-    width: 260px;
+.form-control{
+    height: 40px;
+    width: 450px;
     font-size: 17px;
     margin-bottom: 20px;
+}
+.form-control-1{
+  height: 30px;
+  width: 260px;
+  font-size: 17px;
+  margin-bottom: 20px;
 }
 .form-control-2{
     height: 30px;
@@ -62,6 +67,8 @@ p {
 }
 label {
     font-size: 17px;
+    width: '150px';
+    display: 'inline-block' ;
 }
 #cardNumber,
 #expiryDate,
