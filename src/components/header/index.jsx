@@ -1,20 +1,31 @@
 import './styles.scss';
-import {Link} from "react-router-dom";
-import { useContext } from 'react';
+import {Link, useNavigate } from "react-router-dom";
+import {useState, useContext } from 'react';
 import { CategoryContext } from '../../context/category-context';
 import Auth from "../auth";
 
 const Header = () =>{
     const [categories] = useContext(CategoryContext);
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        navigate(`/products/search?name=${searchQuery}`);
+    };
+
     return(
         <header className='header'>
             <div className="container d-flex align-items-center h-100">
                 <Link to="/home">
                     <img src="/logo-thinkpro.svg" alt="logo" style={{height: '40px'}}/>
                 </Link>
-                <div className="search">
-                    <input className="form-control" type="text" placeholder='Tên sản phẩm, nhu cầu, hàng' />
-                </div>
+                <form className="search" onSubmit={handleSearch}>
+                    <input className="form-control" type="text" placeholder='Tên sản phẩm, nhu cầu, hàng' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+                    <Link to={`/products/search?name=${searchQuery}`}
+                    className="search-button">
+                    </Link>
+                </form>
                 <nav className='nav'>
                     <Link to={"/home"}>
                         <div className="nav-item">

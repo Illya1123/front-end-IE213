@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyProviders from './context';
 import { FullLayout} from "./layouts";
-import { Home, ProductDetail, ProductList, About, PageNotFound, Register } from "./pages";
+import { Home, ProductDetail, ProductList, About, PageNotFound, Register, ProductFound } from "./pages";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: 'products',
         element: <ProductList />
+      },
+      {
+        path: 'products/search',
+        element: <ProductFound />
       },
       {
         path: 'products/:id',
