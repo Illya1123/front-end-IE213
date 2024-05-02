@@ -8,14 +8,12 @@ const Register = () =>{
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            name: '',
             username: '',
             password: '',
             passwordConfirm: ''
         },
         onSubmit: (values) =>{
             if (
-                values.name === "" ||
                 values.username === "" ||
                 values.password === "" ||
                 values.passwordConfirm === ""
@@ -66,13 +64,6 @@ const Register = () =>{
                     <p>Nếu chưa có tài khoản vui lòng đăng ký tại đây!</p>
                 </div>
                 <form className="row">
-                    <div className="col-md-6">
-                        <label forhtml="name" className="form-label">Họ tên</label>
-                        <input type="text" className="form-control" id="name" required
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                        ></input>
-                    </div>
                     <div className="col-md-6">
                         <label forhtml="username" className="form-label">Tài khoản</label>
                         <input type="text" className="form-control" id="username" required
