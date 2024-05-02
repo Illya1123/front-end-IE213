@@ -1,0 +1,99 @@
+$primary-color: #dfe6e9;
+
+.background-container {
+  background-color: $primary-color;
+  color: black;
+  font-size: 18px;
+}
+
+.container {
+    padding: 10px;
+    margin-left: 200px;
+    margin-right: 200px; 
+  }
+
+.text-center {
+  text-align: center;
+}
+
+.form-group {
+    display: flex;
+    margin-top: 20px;
+    // justify-content: center;
+    // align-items: center;
+    // margin-left: 100px; /* Chỉnh sửa lề trái thành 100px */
+  }
+ 
+  
+  .form-group input {
+    padding-left: 10px;
+  }
+  h2{
+    margin-right: 30px;
+}
+h3{
+    font-size: 23px;
+    
+}
+p {
+    font-size: 20px;
+    
+}
+.form-control{
+    height: 40px;
+    width: 450px;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+.form-control-1{
+  height: 30px;
+  width: 260px;
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+.form-control-2{
+    height: 30px;
+    width: 260px;
+    font-size: 17px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+.form-control-3{
+    height: 30px;
+    width: 260px;
+    font-size: 17px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+label {
+    font-size: 17px;
+    width: '150px';
+    display: 'inline-block' ;
+}
+#cardNumber,
+#expiryDate,
+#cvv {
+  font-size: 17px;
+}
+#name,
+#bankAccount {
+  font-size: 17px;
+}
+
+
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .notification-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+  }
