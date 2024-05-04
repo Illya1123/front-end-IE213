@@ -119,7 +119,12 @@ const ProductDetail = (props) => {
                           width: '100%',
                           height: '100%',
                         }}
+                      >
+                      <img
+                          src={`https://images.thinkgroup.vn/unsafe/212x212/https://media-api-beta.thinkpro.vn/${image.src}`}
+                          alt="section-banner"
                       />
+                      </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
