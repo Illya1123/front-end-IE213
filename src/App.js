@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'; 
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -6,6 +7,8 @@ import MyProviders from './context';
 import { FullLayout} from "./layouts";
 import { Home, ProductDetail, ProductList, About, PageNotFound, Register, ProductFound} from "./pages";
 import PaymentPage from "./pages/product/PaymentPage"
+import OrderDetail from './pages/product/OrderDetail';
+import Modal from 'react-modal';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +44,10 @@ const router = createBrowserRouter([
         element: <PaymentPage />
       },
       {
+        path:'order/:id',
+        element: <OrderDetail />
+      },
+      {
         path: '',
         element: <Home />
       }
@@ -53,6 +60,9 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  useEffect(() => {
+    Modal.setAppElement(document.getElementById('root'));
+}, []);
   return (
     <MyProviders>
          <RouterProvider router={router} />
