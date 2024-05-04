@@ -11,6 +11,7 @@ import http from "../../utils/request";
 import Counter from "./counter";
 import Swal from "sweetalert2";
 
+
 const ProductDetail = (props) => {
   const { productInfo } = window.location.state || {};
   const { id } = useParams();
@@ -20,11 +21,18 @@ const ProductDetail = (props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [quantity, setQuantity] = useState(1); // Initial quantity
+
   const handleOptionChange = (optionName, optionValue) => {
     setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
   };
+
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+  };
+
   const handleBuyNow = () => {
-    navigate(`/payment/${id}`);
+    navigate(`/payment/${id}`, { state: { quantity, selectedOptions } }); 
   };
 
   useEffect(() => {
@@ -53,8 +61,8 @@ const ProductDetail = (props) => {
           <img src="${url}" class="img-swal w-75 h-75">
         <div>
       `,
-    })
-  }
+    });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -102,7 +110,7 @@ const ProductDetail = (props) => {
                     >
                       <div
                         className={
-                          image.src === imageSelected ? 'img-selected  hover-c' : 'hover-c'
+                          image.src === imageSelected ? 'img-selected  hover-c' : 'hover-c'
                         }
                         style={{
                           backgroundImage: `url(${image.src})`,
@@ -169,7 +177,7 @@ const ProductDetail = (props) => {
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "8px", fontWeight: "bold" }}
-                    onClick={handleBuyNow}
+                    onClick={() => handleBuyNow(product.id, quantity)}
                   >
                     Mua ngay
                   </button>
