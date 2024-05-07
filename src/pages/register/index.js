@@ -55,43 +55,48 @@ const Register = () =>{
             })
         }
     })
-    return(
-    <>
-        <div className="container">
+    return (
+        <div className="container d-flex justify-content-center align-items-center">
             <div className="bg-body rounded p-3">
-                <h1>ĐĂNG KÝ TÀI KHOẢN</h1>
+                <h1 className="text-center">ĐĂNG KÝ TÀI KHOẢN</h1>
                 <div className="my-4">
-                    <p>Nếu chưa có tài khoản vui lòng đăng ký tại đây!</p>
+                    <p className="text-center"><i>Nếu chưa có tài khoản vui lòng đăng ký tại đây!</i></p>
                 </div>
-                <form className="row">
-                    <div className="col-md-6">
-                        <label forhtml="username" className="form-label">Tài khoản</label>
-                        <input type="text" className="form-control" id="username" required
+                <form>
+                    <div className="row my-4">
+                        <label htmlFor="username" className="col-sm-3 col-form-label">Tài khoản:</label>
+                        <div className="col-sm-9">
+                            <input type="text" className="form-control" id="username" required 
                             value={formik.values.username}
                             onChange={formik.handleChange}
-                        ></input>
+                            ></input>
+                        </div>
                     </div>
-                    <div className="col-md-6">
-                        <label forhtml="password" className="form-label">Mật khẩu</label>
-                        <input type="password" className="form-control" id="password" required
+                    <div className="row my-4">
+                        <label htmlFor="password" className="col-sm-3 col-form-label">Mật khẩu:</label>
+                        <div className="col-sm-9">
+                            <input type="password" className="form-control" id="password" required 
                             value={formik.values.password}
                             onChange={formik.handleChange}
-                        ></input>
+                            ></input>
+                        </div>
                     </div>
-                    <div className="col-md-6">
-                        <label forhtml="passwordConfirm" className="form-label">Nhập lại mật khẩu</label>
-                        <input type="password" className="form-control" id="passwordConfirm" required
+                    <div className="row my-4">
+                        <label htmlFor="passwordConfirm" className="col-sm-3 col-form-label">Nhập lại mật khẩu:</label>
+                        <div className="col-sm-9">
+                            <input type="password" className="form-control" id="passwordConfirm" required 
                             value={formik.values.passwordConfirm}
                             onChange={formik.handleChange}
-                        ></input>
+                            ></input>
+                        </div>
                     </div>
-                    <div className="col-12 mt-4">
-                        
+                    <div className="text-center mt-4">
                         <button className="btn" type="none"  style={{ backgroundColor: "var(--bs-primary)", color: "white" }} onClick={formik.handleSubmit}>Đăng ký</button>
                     </div>
                 </form>
             </div>
         </div>
-    </>)
+    )    
+        
 }
 export default Register;
