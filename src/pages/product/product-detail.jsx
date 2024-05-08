@@ -1,16 +1,16 @@
-import "./product-detail.scss"; 
-import "./payment.scss"; 
-import { Pagination, Navigation } from "swiper"; 
-import "swiper/css"; 
-import "swiper/css/pagination"; 
-import "swiper/css/navigation"; 
-import { Swiper, SwiperSlide } from "swiper/react"; 
-import { useState, useContext, useEffect } from "react"; 
-import { useParams, useNavigate } from "react-router-dom"; 
-import http from "../../utils/request"; 
-import Counter from "./counter"; 
-import Swal from "sweetalert2"; 
-import { CartContext } from "../../context/cart-context";
+import "./product-detail.scss";
+import "./payment.scss";
+import { Pagination, Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import http from "../../utils/request";
+import Counter from "./counter";
+import Swal from "sweetalert2";
+
 
 const ProductDetail = (props) => {
   const { productInfo } = window.location.state || {};
@@ -22,64 +22,17 @@ const ProductDetail = (props) => {
   const [error, setError] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [quantity, setQuantity] = useState(1); // Initial quantity
-  const cartContext = useContext(CartContext);
-  const { addToCart } = cartContext;
-  const [cartItems, setCartItems] = useState([]);
-  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   const handleOptionChange = (optionName, optionValue) => {
-    setSelectedOptions({...selectedOptions, [optionName]: optionValue });
-  };
-
-  const handleAddToCartAndIncrementCount = (product) => {
-    // Thêm sản phẩm vào giỏ hàng
-    //...
-
-    // Kiểm tra xem sản phẩm đã có trong giỏ hàng hay chưa
-    const existingProductIndex = cartItems.findIndex(item => item.id === product.id);
-
-    if (existingProductIndex > -1) {
-      // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng sản phẩm
-      const updatedCartItems = [...cartItems];
-      updatedCartItems[existingProductIndex].quantity += product.quantity;
-      setCartItems(updatedCartItems);
-    } else {
-      // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào giỏ hàng
-      setCartItems([...cartItems, product]);
-    }
-
-    // Cập nhật số lượng sản phẩm trong giỏ hàng
-    setCartItemsCount(cartItemsCount + product.quantity);
+    setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
   };
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
   };
 
-  const handleCartNow = () => {
-    if (product) {
-      const productToAdd = {
-        id: product.id,
-        name: product.model.name,
-        image: imageSelected,
-        quantity: quantity,
-        price: product.model.price,
-        options: selectedOptions,
-      };
-
-      addToCart(productToAdd);
-      Swal.fire({
-        icon: "success",
-        title: "Thêm vào giỏ hàng thành công",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      navigate(`/cart/${id}`, { state: { quantity, selectedOptions } });
-    }
-  };
-
   const handleBuyNow = () => {
-    navigate(`/payment/${id}`, { state: { quantity, selectedOptions } });
+    navigate(`/payment/${id}`, { state: { quantity, selectedOptions } }); 
   };
 
   useEffect(() => {
@@ -118,7 +71,6 @@ const ProductDetail = (props) => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
 
   return (
     <>
@@ -226,8 +178,7 @@ const ProductDetail = (props) => {
                     })}
                   </p>
                   <div className="spacer"></div>
-                  <button className="btn btn-add-cart" onClick={handleCartNow}
-                  >Thêm vào giỏ</button>
+                  <button className="btn btn-add-cart">Thêm vào giỏ</button>
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "8px", fontWeight: "bold" }}
