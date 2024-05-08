@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import http from "../../utils/request";
 import Swal from 'sweetalert2';
+import axios from 'axios'; // Import axios for making HTTP requests
 
 const Auth = () => {
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(localStorage.getItem('username') || null); // Load username từ localStorage
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || null); // Load accessToken từ localStorage
+  const [userData, setUserData] = useState(null); // Khởi tạo state userData với giá trị ban đầu là null
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -28,10 +32,43 @@ const Auth = () => {
             text: ''
           })
           setUsername(values.username);
+          setAccessToken(res.data.accessToken); // Lưu accessToken vào state
+          localStorage.setItem('username', values.username); // Lưu username vào localStorage
+          localStorage.setItem('accessToken', res.data.accessToken); // Lưu accessToken vào localStorage
         }
       })
     },
   });
+
+  useEffect(() => {
+    // Xóa username và accessToken từ localStorage khi đăng xuất
+    if (!username) {
+      localStorage.removeItem('username');
+      localStorage.removeItem('accessToken');
+    }
+  }, [username]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await http.get(
+          `/users/${username}`
+        );
+        if( response) {
+          setUserData(response.data);
+          localStorage.setItem("userId", response.data._id);
+          console.log(response.data);
+        } else {
+          console.error("Error fetching user data:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    if (username) { 
+      fetchUserData();
+    }
+  }, [username]); 
 
   return (
     <>
