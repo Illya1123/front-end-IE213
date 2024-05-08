@@ -1,20 +1,28 @@
 import './styles.scss';
-import {Link, useNavigate } from "react-router-dom";
-import {useState, useContext } from 'react';
+import {Link, useNavigate, useParams } from "react-router-dom";
+import {useState, useContext, useEffect } from 'react';
 import { CategoryContext } from '../../context/category-context';
 import Auth from "../auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () =>{
     const [categories] = useContext(CategoryContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    const {id} = useParams();
+    const [cartItemsCount, setCartItemsCount] = useState(0);
 
     const handleSearch = (e) => {
         e.preventDefault();
         navigate(`/products/search?name=${searchQuery}`);
     };
+    const handleCart = () => {
+        navigate(`/cart`);
+      };
 
     return(
+        
         <header className='header'>
             <div className="container d-flex align-items-center h-100">
                 <Link to="/home">
@@ -62,6 +70,29 @@ const Header = () =>{
                 </nav>
                 <div className="spacer"></div>
                 <Auth />
+                <div>
+                    <i className='icon' id='cart-icon' onClick={handleCart}>
+                        {/* <img src="shopping-cart.png" alt="shoppingcart" style={{height:'30px'}}/> */}
+                        <FontAwesomeIcon icon={faShoppingCart} size="1x" />
+                        {cartItemsCount > 0 && <span className='cart-quantity'>{cartItemsCount}</span>}
+                    </i>
+                    {/* <div className="cart">
+                        <h2 className='cart-title' style ={{textAlign: 'center'}}>Giỏ hàng</h2>
+
+                        <div className="cart-content">
+                            <div className="cart-box"></div>
+
+                        </div>
+                        <div className='total'>
+                        <div className='total-tittle'>Tổng:</div>
+                        <div className='total-price'>0đ</div>
+                        </div>
+                        <button type='button' className='buy-btn'>Mua hàng</button>
+                        <button type='button' className='close-btn'>
+                            <img src='close.png' style={{height:'20px'}} ></img>
+                        </button> */}
+                   
+                </div>
             </div>
         </header>
     )

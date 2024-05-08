@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import "./payment.scss";
 import Modal from "react-modal";
@@ -5,7 +6,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import http from "../../utils/request";
 import Swal from "sweetalert2";
-import Counter from "./counter";
+import Counter from './counter';
+import {v4 as uuidv4} from 'uuid'
 
 const PaymentPage = (props) => {
   const navigate = useNavigate();
@@ -51,6 +53,22 @@ const PaymentPage = (props) => {
     }
   }, [userName]);
 
+  useEffect(() => {
+    getUserID();
+  }, []);
+
+  const postOrder = async (orders) => {
+    try {
+      console.log('Order to be posted:', orders);
+      const response = await http.post('http://localhost:3000/orders', orders);
+      console.log('Post order response:', response);
+      setError(null);
+      setOrderId(response.data);
+    } catch (error) {
+      console.error('Error posting order:', error);
+      setError(error.message);
+    }
+  };
   const handleOKNow = async (event) => {
     event.preventDefault();
     const userId = localStorage.getItem("userId");
@@ -90,7 +108,7 @@ const PaymentPage = (props) => {
     const fetchProduct = async () => {
       try {
         const response = await http.get(`/products/details?skuId=${id}`);
-        if (response) {
+        if (response.data) {
           setProduct(response.data);
           console.log(response.data);
           setTotalPrice(response.data.model.price * quantity);
@@ -103,6 +121,7 @@ const PaymentPage = (props) => {
         setLoading(false);
       }
     };
+
     fetchProduct();
   }, [id, quantity]);
 
@@ -275,6 +294,8 @@ const PaymentPage = (props) => {
               <option value="TPBank">TPBank</option>
               <option value="NamABank">Nam A Bank</option>
               <option value="ACB">ACB</option>
+              <option value="MBBank">MB Bank</option>
+              <option value="VPBank">VPBank</option>
             </select>
           </div>
           <div className="form-group">
@@ -507,7 +528,6 @@ const PaymentPage = (props) => {
         <div
           className="row justify-content-center align-items-center"
           style={{ height: "200vh" }}
-        >
           <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
           <h1 className="text-center">THANH TOÁN</h1>
           <div className="col-md-7 custom-column" style={{ height: "100%" }}>
@@ -627,6 +647,7 @@ const PaymentPage = (props) => {
               </div>
             </div>
           </div>
+
           <div className="col-md-1 custom-column"></div>
           <div className="col-md-4 custom-column" style={{ height: "100%" }}>
             <div className="d-flex flex-column align-items-center">
@@ -662,8 +683,11 @@ const PaymentPage = (props) => {
                   Thanh toán
                 </button>
               </div>
+
             </div>
+
           </div>
+
           <Modal
             isOpen={isModalOpen}
             onRequestClose={() => setIsModalOpen(false)}
