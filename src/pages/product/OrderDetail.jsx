@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import http from "../../utils/request";
 const OrderDetail = () => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const response = await axios.get(`/api/orders/${id}`);
-        setOrder(response.data);
-      } catch (error) {
-        console.error('Error fetching order', error);
-      }
-    };
-
-    fetchOrder();
+    if (id) {
+      axios.get(`/api/orders/${id}`)
+        .then(response => {
+          setOrder(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching order:', error);
+        });
+    }
   }, [id]);
 
   const handlePreviewImage = (url) => {
@@ -46,7 +46,7 @@ const OrderDetail = () => {
             <h3 style={{ marginBottom: '50px' }}> Thông tin khách hàng:</h3>
             <div className="form-group">
               <label htmlFor="buyerName" style={{ width: '150px', display: 'inline-block' }}><b>Họ và tên:</b></label>
-              <p>{order.buyerName}</p>
+              <p>{order.name}</p>
             </div>
             <div className="form-group">
               <label htmlFor="phoneNumber" style={{ width: '150px', display: 'inline-block' }}><b>Số điện thoại:</b></label>
@@ -65,7 +65,7 @@ const OrderDetail = () => {
                     src={order.imageSelected}
                     alt=""
                     style={{ width: "80%", height: "80%", objectFit: "contain" }}
-                    onClick={() => handlePreviewImage(order.imageSelected)}
+                    onClick={() => {{ handlePreviewImage(order.imageSelected); } }}
                   />
                 </div>
               </div>
@@ -95,7 +95,7 @@ const OrderDetail = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="paymentResult" style={{ width: '250px', display: 'inline-block' }}><b>Kết quả thanh toán:</b></label>
-                <p>{order.paymentResult}</p>
+                <p>{order.status}</p>
               </div>
             </div>
           </div>

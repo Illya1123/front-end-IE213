@@ -7,7 +7,7 @@ $primary-color: #dfe6e9;
 }
 
 .container {
-    padding: 10px;
+    padding: 50px;
     margin-left: 200px;
     margin-right: 200px; 
   }
@@ -19,9 +19,6 @@ $primary-color: #dfe6e9;
 .form-group {
     display: flex;
     margin-top: 20px;
-    // justify-content: center;
-    // align-items: center;
-    // margin-left: 100px; /* Chỉnh sửa lề trái thành 100px */
   }
  
   
@@ -96,4 +93,68 @@ label {
     font-size: 18px;
     font-weight: bold;
     color: #000000;
+  }
+  .bank-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-left: 200px;
+  }
+  
+  .bank-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  
+  .bank-row img {
+    width: 230px;
+    height: 100px;
+    object-fit: contain;
+    margin: 0 40px;
+  }
+  .ewallet {
+    margin-left: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+  .paymentPort {
+    margin-top: 40px;
+    margin-left: 250px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .bank-row-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  .bank-row-1 img {
+    width: 180px;
+    height: 120px;
+    object-fit: contain;
+    margin: 0 40px;
+  }
+  .bank-row-2 img {
+    width: 180px;
+    height: 120px;
+    object-fit: contain;
+    margin: 0 20px;
+  }
+  .image {
+    margin-bottom: 120px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .tick {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
