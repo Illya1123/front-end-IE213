@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./payment.scss";
 import Modal from 'react-modal';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import http from "../../utils/request";
 import Swal from "sweetalert2";
 import Counter from './counter';
-
+import {v4 as uuidv4} from 'uuid'
 const PaymentPage = (props) => {
   const navigate = useNavigate();
   const [selectedMethod, setSelectedMethod] = useState('');
@@ -37,41 +37,81 @@ const PaymentPage = (props) => {
   const [order, setOrder] = useState(null);
   const { orderToDetail } = props;
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
-  const [orderId, setOrderId]= useState('');
+  const [orderId, setOrderId] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState('');
 
+  const getUserID = async () => {
+    const response = await http.get('http://localhost:3000/users');
+    const data = await response.data;
+    if (data && data.userId) {
+      setUserId(data.userId);
+      setIsLoggedIn(true);
+    }
+  }
+
+  useEffect(() => {
+    getUserID();
+  }, []);
+
+  const postOrder = async (orders) => {
+    try {
+      console.log('Order to be posted:', orders);
+      const response = await http.post('http://localhost:3000/orders', orders);
+      console.log('Post order response:', response);
+      setError(null);
+      setOrderId(response.data);
+    } catch (error) {
+      console.error('Error posting order:', error);
+      setError(error.message);
+    }
+  };
   const handleOKNow = async (event) => {
     event.preventDefault();
-    const order = {
-      id,
-      productName,
-      quantity,
-      price: totalPrice,
-      buyerName,
-      phoneNumber,
-      address,
-      paymentMethod: selectedMethod,
-      paymentResult,
-    };
-    try {
-      const response = await axios.post('/api/orders', order);
-      setOrder(response.data);
-      navigate(`/order/${response.data.id}`);
-    } catch (error) {
-      console.error('Error creating order', error);
+    let userId;
+    if (isLoggedIn){
+      userId = userId;
+    } else {
+     userId = uuidv4();
     }
-    // setOrder(order);
-    // navigate(`/order/${id}}`, { state: { order: order } });
+    const response = await http.get(`/products/details?skuId=${id}`);
+    if (response.data) {
+      setProduct(response.data);
+    }
+  
+    const orders = {
+      userId: userId,
+      products: [
+        {
+          productId: id,
+          quantity: quantity,
+        },
+      ],
+      name: buyerName,
+      totalPrice: totalPrice,
+      address: address,
+      phoneNumber: phoneNumber,
+      paymentMethod: selectedMethod,
+      status: 'pending' 
+    };
+  
+    try {
+      await postOrder(orders);
+      setPaymentConfirmed(true);
+      navigate(`/orders`);
+    } catch (error) {
+      console.error('Error posting order:', error);
+      setError(error.message);
+    }
   };
-
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
     setTotalPrice(product.model.price * newQuantity);
   };
-
   const fetchProduct = async () => {
     try {
       const response = await http.get(`/products/details?skuId=${id}`);
-      if (response) {
+      if (response.data) {
         setProduct(response.data);
         setImageSelected(response.data.assets[0].src);
         if (product && quantity) {
@@ -86,15 +126,19 @@ const PaymentPage = (props) => {
       setLoading(false);
     }
   };
+  
+
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await http.get(`/products/details?skuId=${id}`);
-        if (response) {
+        if (response.data) {
           setProduct(response.data);
           setImageSelected(response.data.assets[0].src);
-
+          if (product && quantity) {
+            setTotalPrice(product.model.price * quantity);
+          }
         } else {
           setError('Error: Product not found');
         }
@@ -104,7 +148,8 @@ const PaymentPage = (props) => {
         setLoading(false);
       }
     };
-
+    
+   
     fetchProduct();
   }, [id]);
 
@@ -237,6 +282,8 @@ const PaymentPage = (props) => {
               <option value="TPBank">TPBank</option>
               <option value="NamABank">Nam A Bank</option>
               <option value="ACB">ACB</option>
+              <option value="MBBank">MB Bank</option>
+              <option value="VPBank">VPBank</option>
             </select>
           </div>
           <div className="form-group">
@@ -274,14 +321,14 @@ const PaymentPage = (props) => {
               onChange={(e) => setExpiryDate(e.target.value)}
             />
           </div>
-<div className="form-group">
+          <div className="form-group">
             <label htmlFor="cvv" style={{ width: '150px', display: 'inline-block' }}><b>Mã CVV:</b></label>
             <input
               type="text"
               className="form-control"
               id="cvv"
               value={cvv}
-              onChange={(e) =>setCvv(e.target.value)}
+              onChange={(e) => setCvv(e.target.value)}
             />
           </div>
         </div>
@@ -376,7 +423,7 @@ const PaymentPage = (props) => {
 
   if (loading) {
     return <div>Loading...</div>;
- }
+  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -390,7 +437,7 @@ const PaymentPage = (props) => {
   return (
     <div className="background-container">
       <div className="container">
-        <div className="row justify-content-center align-items-center" style={{ height: '200vh' }}>
+        <div className="row justify-content-center align-items-center" style={{ height: '140vh' }} >
           <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
           <h1 className="text-center">THANH TOÁN</h1>
           <div className="col-md-7 custom-column" style={{ height: '100%' }}>
@@ -434,7 +481,8 @@ const PaymentPage = (props) => {
                     src={`https://media-api-beta.thinkpro.vn/${imageSelected}`}
                     alt=""
                     style={{ width: "80%", height: "80%", objectFit: "contain" }}
-                onClick={() => handlePreviewImage(`https://media-api-beta.thinkpro.vn/${imageSelected}`)}
+                    onClick={() => { if (order) { handlePreviewImage(order.imageSelected); } }}
+                    // onClick={() => handlePreviewImage(`https://media-api-beta.thinkpro.vn/${imageSelected}`)}
                   />
                 </div>
               </div>
@@ -450,7 +498,7 @@ const PaymentPage = (props) => {
                 <div className="form-group">
                   <label htmlFor="totalPrice" style={{ width: '150px', display: 'inline-block' }}><b>Tổng tiền:</b></label>
                   <div className="d-flex">
-                {totalPrice !== null && (
+                    {totalPrice !== null && (
                       <p style={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>
                         {totalPrice.toLocaleString('it-IT', {
                           style: 'currency',
@@ -463,6 +511,7 @@ const PaymentPage = (props) => {
               </div>
             </div>
           </div>
+
           <div className="col-md-1 custom-column"></div>
           <div className="col-md-4 custom-column" style={{ height: '100%' }}>
             <div className="d-flex flex-column align-items-center">
@@ -487,6 +536,7 @@ const PaymentPage = (props) => {
               <div className="text-center mt-4">
                 <button
                   className="btn btn-primary"
+                  // onClick={(event) => handleOKNow(event)}
                   onClick={() => handlePayment(productName, quantity, setQuantity)}
                   style={{
                     height: '40px',
@@ -498,105 +548,146 @@ const PaymentPage = (props) => {
                   Thanh toán
                 </button>
               </div>
+
             </div>
+
           </div>
+
           <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)'
-          },
-          content: {
-            width: '500px',
-            height: '250px',
-            margin: 'auto',
-            fontSize: '17px'
-          }
-        }}
-      >
-        <h3 style={{ textAlign: 'center', marginBottom: '30px', marginTop: '15px' }}>XÁC NHẬN THANH TOÁN</h3>
-        <p style={{ textAlign: 'center', marginBottom: '50px' }}>Bạn có chắc chắn muốn thanh toán không?</p>
-        <div style={{ display: 'flex' }}>
-          <button
-            onClick={handleConfirmOrder}
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
             style={{
-              marginLeft: '120px',
-              width: '70px',
-              height: '40px',
-              borderRadius: '5px',
-              fontWeight: 'bold',
-              backgroundColor: '#7efff5',
-              borderColor: '#7efff5'
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.5)'
+              },
+              content: {
+                width: '500px',
+                height: '250px',
+                margin: 'auto',
+                fontSize: '17px'
+              }
             }}
           >
-            Có
-          </button>
-          <button
-            onClick={() => setIsModalOpen(false)}
-            style={{
-              marginLeft: '60px',
-              width: '100px',
-              height: '40px',
-              borderRadius: '5px',
-              fontWeight: 'bold',
-              backgroundColor: '#fc5c65',
-              borderColor: '#fc5c65'
-            }}
-          >
-            Không
-          </button>
-        </div>
-      </Modal>
-      {paymentConfirmed && (
-        <Modal
-          isOpen={paymentConfirmed}
-          onRequestClose={() => setPaymentConfirmed(false)}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.5)'
-            },
-            content: {
-              width: '500px',
-              height: '250px',
-              margin: 'auto',
-              fontSize: '17px'
-            }
-          }}
-        >
-          <h3 style={{ textAlign: 'center', marginBottom: '30px', marginTop: '15px' }}>ĐẶT HÀNG THÀNH CÔNG</h3>
-          <p style={{ textAlign: 'center', marginBottom: '50px' }}>Bạn đã đặt đơn hàng thành công</p>
-          <div style={{display: 'flex' }}>
-              <button onClick={() => {
-                setPaymentConfirmed(false);
-                navigate('/');
-              }}
-                style={{ 
-                  marginLeft: '30px',
-                 width: '250px', 
-                 height: '40px',
-                 borderRadius: '5px',
-                fontWeight: 'bold',
-                 backgroundColor: '#7efff5',
-                 borderColor: '#7efff5'
-                  }}>Tiếp tục mua sắm</button>
-              <button onClick={() => {
-                setPaymentConfirmed(false);
-                navigate(`/order/${orderId}`);
-              }}
+            <h3 style={{ textAlign: 'center', marginBottom: '30px', marginTop: '15px' }}>XÁC NHẬN THANH TOÁN</h3>
+            <p style={{ textAlign: 'center', marginBottom: '50px' }}>Bạn có chắc chắn muốn thanh toán không?</p>
+            <div style={{ display: 'flex' }}>
+              <button
+                onClick={handleConfirmOrder}
                 style={{
-                  marginLeft: '30px',
-                  width: '250px',
+                  marginLeft: '120px',
+                  width: '70px',
                   height: '40px',
                   borderRadius: '5px',
                   fontWeight: 'bold',
-                  backgroundColor: '#dfe6e9',
-                  borderColor: '#dfe6e9'
+                  backgroundColor: '#7efff5',
+                  borderColor: '#7efff5'
                 }}
-              >Xem chi tiết đơn hàng</button>
+              >
+                Có
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                style={{
+                  marginLeft: '60px',
+                  width: '100px',
+                  height: '40px',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  backgroundColor: '#fc5c65',
+                  borderColor: '#fc5c65'
+                }}
+              >
+                Không
+              </button>
             </div>
-        </Modal>
-      )}
+          </Modal>
+          {paymentConfirmed && (
+            <Modal
+              isOpen={paymentConfirmed}
+              onRequestClose={() => setPaymentConfirmed(false)}
+              style={{
+                overlay: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                },
+                content: {
+                  width: '700px',
+                  height: '300px',
+                  margin: 'auto',
+                  fontSize: '17px'
+                }
+              }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <img src={require('../../images/tick.jpg')} alt="Success" style={{ width: '60px', height: '60px' }} />
+                <h3 style={{ marginBottom: '30px', marginTop: '15px' }}>ĐẶT HÀNG THÀNH CÔNG</h3>
+                <p style={{ textAlign: 'center', marginBottom: '50px' }}>Bạn đã đặt đơn hàng thành công</p>
+                <div style={{ display: 'flex' }}>
+                  <button onClick={() => {
+                    setPaymentConfirmed(false);
+                    navigate('/');
+                  }}
+                    style={{
+                      marginLeft: '30px',
+                      width: '250px',
+                      height: '40px',
+                      borderRadius: '5px',
+                      fontWeight: 'bold',
+                      backgroundColor: '#7efff5',
+                      borderColor: '#7efff5'
+                    }}>Tiếp tục mua sắm</button>
+                  <button onClick={(event) => handleOKNow(event)
+                     
+                  } style={{
+                    marginLeft: '30px',
+                    width: '250px',
+                    height: '40px',
+                    borderRadius: '5px',
+                    fontWeight: 'bold',
+                    backgroundColor: '#dfe6e9',
+                    borderColor: '#dfe6e9'
+                  }}>Xem chi tiết đơn hàng</button>
+                </div>
+              </div>
+            </Modal>
+          )}
+        </div>
+      </div>
+      <div className='image'>
+        <div className=" bank-images">
+          <div>
+            <h5 style={{ marginBottom: '30px', marginLeft: '50px' }}>Chấp nhận thẻ của các ngân hàng:</h5>
+            <div className="bank-row">
+              <img src={require('../../images/ACB.png')} alt="ACB" />
+              <img src={require('../../images/BIDV.jpg')} alt="BIDV" />
+              <img src={require('../../images/MBBank.png')} alt="MBBank" />
+              <img src={require('../../images/NamABank.png')} alt="NamABank" />
+            </div>
+            <div className="bank-row">
+              <img src={require('../../images/TPBank.png')} alt="TPBank" />
+              <img src={require('../../images/VPBank.png')} alt="VPBank" />
+              <img src={require('../../images/Vietcombank.jpg')} alt="Vietcombank" />
+              <img src={require('../../images/Viettinbank.png')} alt="ViettinBank" />
+            </div>
+            <div className="bank-row">
+              <img src={require('../../images/SeABank.png')} alt="SeABank" />
+              <img src={require('../../images/agribank.png')} alt="Agribank" />
+              <img src={require('../../images/Techcombank.png')} alt="Techcombank" />
+              <img src={require('../../images/sacombank.png')} alt="Sacombank" />
+            </div>
+          </div>
+        </div>
+        <div className='ewallet'>
+          <h5 style={{ marginBottom: '30px' }}>Chấp nhận các ví điện tử:</h5>
+          <div className="bank-row-1">
+            <img src={require('../../images/Momo.png')} alt="Momo" />
+            <img src={require('../../images/ZaloPay.png')} alt="ZaloPay" />
+          </div>
+        </div>
+        <div className='paymentPort' >
+          <h5 style={{ marginBottom: '30px' }} >Chấp nhận thanh toán qua cổng thanh toán: </h5>
+          <div className="bank-row-2">
+            <img src={require('../../images/VNPay.png')} alt="VNPay" />
+          </div>
         </div>
       </div>
     </div>

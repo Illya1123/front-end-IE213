@@ -8,7 +8,9 @@ import { FullLayout} from "./layouts";
 import { Home, ProductDetail, ProductList, About, PageNotFound, Register, ProductFound} from "./pages";
 import PaymentPage from "./pages/product/PaymentPage"
 import OrderDetail from './pages/product/OrderDetail';
+import Cart from './pages/product/Cart';
 import Modal from 'react-modal';
+import { CartProvider } from './context/cart-context';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
         element: <OrderDetail />
       },
       {
+        path: 'cart/:id',
+        element: <Cart />
+      },
+      {
         path: '',
         element: <Home />
       }
@@ -65,7 +71,9 @@ function App() {
 }, []);
   return (
     <MyProviders>
+      <CartProvider>
          <RouterProvider router={router} />
+         </CartProvider>
     </MyProviders>
   );
 }
