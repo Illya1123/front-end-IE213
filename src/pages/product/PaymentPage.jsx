@@ -1,30 +1,32 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from "react";
 import "./payment.scss";
-import Modal from 'react-modal';
-import axios from 'axios';
+import Modal from "react-modal";
+import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import http from "../../utils/request";
 import Swal from "sweetalert2";
-import Counter from './counter';
+import Counter from "./counter";
 
 const PaymentPage = (props) => {
   const navigate = useNavigate();
-  const [selectedMethod, setSelectedMethod] = useState('');
+  const [userName, setUserName] = useState("");
+  const [user, setUser] = useState(null);
+  const [selectedMethod, setSelectedMethod] = useState("");
   const [paymentResult, setPaymentResult] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bankAccount, setBankAccount] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-  const [cvv, setCvv] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [buyerName, setBuyerName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [bank, setBank] = useState('');
-  const [transferContent, setTransferContent] = useState('');
-  const [ewallet, setEwallet] = useState('');
-  const [ewalletPhoneNumber, setEwalletPhoneNumber] = useState('');
-  const [productName, setProductName] = useState('');
+  const [bankAccount, setBankAccount] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [buyerName, setBuyerName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [bank, setBank] = useState("");
+  const [transferContent, setTransferContent] = useState("");
+  const [ewallet, setEwallet] = useState("");
+  const [ewalletPhoneNumber, setEwalletPhoneNumber] = useState("");
+  const [productName, setProductName] = useState("");
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const [error, setError] = useState(null);
@@ -33,58 +35,55 @@ const PaymentPage = (props) => {
   const { productInfo } = window.location.state || {};
   const { selectedOptions } = productInfo || {};
   const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(product?.model?.price * quantity);
+  const [userDataFetched, setUserDataFetched] = useState(false); 
+  const [totalPrice, setTotalPrice] = useState(
+    product?.model?.price * quantity
+  );
   const [order, setOrder] = useState(null);
   const { orderToDetail } = props;
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
-  const [orderId, setOrderId]= useState('');
+  const [orderId, setOrderId] = useState("");
+
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    if (username) {
+      setUserName(username);
+    }
+  }, [userName]);
 
   const handleOKNow = async (event) => {
     event.preventDefault();
-    const order = {
-      id,
-      productName,
-      quantity,
-      price: totalPrice,
-      buyerName,
-      phoneNumber,
-      address,
+    const userId = localStorage.getItem("userId");
+    const productId = typeof product._id === "string" ? product._id : String(product._id);
+
+    const orderData = {
+      userId: userId || "guest",
+      products: [{ productId: productId, quantity: quantity }],
+      name: buyerName,
+      totalPrice: totalPrice,
+      address: address,
+      phoneNumber: phoneNumber,
       paymentMethod: selectedMethod,
-      paymentResult,
+      status: "pending",
     };
+
     try {
-      const response = await axios.post('/api/orders', order);
+      const response = await axios.post(
+        `http://localhost:3000/orders`,
+        orderData
+      );
+      console.log(orderData);
       setOrder(response.data);
-      navigate(`/order/${response.data.id}`);
+      setOrderId(response.data._id);
+      setPaymentConfirmed(true);
     } catch (error) {
-      console.error('Error creating order', error);
+      console.error("Error creating order", error);
     }
-    // setOrder(order);
-    // navigate(`/order/${id}}`, { state: { order: order } });
-  };
+};
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
     setTotalPrice(product.model.price * newQuantity);
-  };
-
-  const fetchProduct = async () => {
-    try {
-      const response = await http.get(`/products/details?skuId=${id}`);
-      if (response) {
-        setProduct(response.data);
-        setImageSelected(response.data.assets[0].src);
-        if (product && quantity) {
-          setTotalPrice(product.model.price * quantity);
-        }
-      } else {
-        setError('Error: Product not found');
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
   };
 
   useEffect(() => {
@@ -93,10 +92,10 @@ const PaymentPage = (props) => {
         const response = await http.get(`/products/details?skuId=${id}`);
         if (response) {
           setProduct(response.data);
-          setImageSelected(response.data.assets[0].src);
-
+          console.log(response.data);
+          setTotalPrice(response.data.model.price * quantity);
         } else {
-          setError('Error: Product not found');
+          setError("Error: Product not found");
         }
       } catch (err) {
         setError(err.message);
@@ -104,9 +103,8 @@ const PaymentPage = (props) => {
         setLoading(false);
       }
     };
-
     fetchProduct();
-  }, [id]);
+  }, [id, quantity]);
 
   useEffect(() => {
     if (product && quantity) {
@@ -116,7 +114,7 @@ const PaymentPage = (props) => {
 
   const handlePreviewImage = (url) => {
     Swal.fire({
-      width: '100px',
+      width: "100px",
       showCloseButton: true,
       showConfirmButton: false,
       html: `
@@ -124,7 +122,7 @@ const PaymentPage = (props) => {
           <img src="${url}" class="img-swal w-75 h-75">
         <div>
       `,
-    })
+    });
   };
 
   const handlePayment = async (productName, quantity, setQuantity) => {
@@ -134,72 +132,102 @@ const PaymentPage = (props) => {
       let paymentData = { method: selectedMethod, productName, quantity };
       let isValidPayment = true;
 
-      if (selectedMethod === 'bankTransfer') {
+      if (selectedMethod === "bankTransfer") {
         if (!bankAccount || !fullName || !bank || !transferContent) {
           isValidPayment = false;
-          setPaymentResult('Vui lòng điền đầy đủ thông tin');
+          setPaymentResult("Vui lòng điền đầy đủ thông tin");
         } else {
           paymentData.bankAccount = bankAccount;
           paymentData.fullName = fullName;
           paymentData.bank = bank;
           paymentData.transferContent = transferContent;
-          setPaymentResult('Chuyển khoản thành công');
+          setPaymentResult("Chuyển khoản thành công");
         }
-      } else if (selectedMethod === 'atmCard' || selectedMethod === 'internationalCard') {
+      } else if (
+        selectedMethod === "atmCard" ||
+        selectedMethod === "internationalCard"
+      ) {
         if (!cardNumber || !expiryDate || !cvv) {
           isValidPayment = false;
-          setPaymentResult('Vui lòngđiền đầy đủ thông tin');
+          setPaymentResult("Vui lòngđiền đầy đủ thông tin");
         } else {
           paymentData.cardNumber = cardNumber;
           paymentData.expiryDate = expiryDate;
           paymentData.cvv = cvv;
-          setPaymentResult('Thanh toán bằng thẻ thành công');
+          setPaymentResult("Thanh toán bằng thẻ thành công");
         }
-      } else if (selectedMethod === 'cash') {
-        setPaymentResult('Thanh toán thành công');
-      } else if (selectedMethod === 'qrCode') {
+      } else if (selectedMethod === "cash") {
+        setPaymentResult("Thanh toán thành công");
+      } else if (selectedMethod === "qrCode") {
         setPaymentResult(null);
         setIsModalOpen(false);
         return;
-      } else if (selectedMethod === 'ewallet') {
+      } else if (selectedMethod === "ewallet") {
         if (!ewallet || !ewalletPhoneNumber) {
           isValidPayment = false;
-          setPaymentResult('Vui lòng điền đầy đủ thông tin');
+          setPaymentResult("Vui lòng điền đầy đủ thông tin");
         } else {
           paymentData.ewallet = ewallet;
           paymentData.ewalletPhoneNumber = ewalletPhoneNumber;
-          setPaymentResult('Thanh toán bằng ví điện tử thành công');
+          setPaymentResult("Thanh toán bằng ví điện tử thành công");
         }
-      } else if (selectedMethod === 'vnpay') {
-        setPaymentResult('Thanh toán bằng VNPay thành công');
+      } else if (selectedMethod === "vnpay") {
+        setPaymentResult("Thanh toán bằng VNPay thành công");
       } else {
         isValidPayment = false;
-        setPaymentResult('Vui lòng chọn phương thức thanh toán');
+        setPaymentResult("Vui lòng chọn phương thức thanh toán");
       }
 
       if (isValidPayment) {
         setIsModalOpen(true);
       }
-
     } catch (error) {
-      console.error('Lỗi khi thực hiện thanh toán:', error);
+      console.error("Lỗi khi thực hiện thanh toán:", error);
     }
   };
 
   const renderPaymentForm = () => {
-    if (selectedMethod === 'bankTransfer') {
+    if (selectedMethod === "bankTransfer") {
       return (
         <div>
-          <h3 style={{ textAlign: 'center' }}>Thông tin chuyển khoản ngân hàng</h3>
-          <h5 style={{ textAlign: 'center', marginBottom: '40px' }}>  <i>Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh toán</i></h5>
+          <h3 style={{ textAlign: "center" }}>
+            Thông tin chuyển khoản ngân hàng
+          </h3>
+          <h5 style={{ textAlign: "center", marginBottom: "40px" }}>
+            {" "}
+            <i>
+              Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh
+              toán
+            </i>
+          </h5>
           <div>
-            <p><b>Tên tài khoản:</b> Lê Quốc Anh</p> <br></br>
-            <p><b>Số tài khoản:</b> 0815929695</p> <br></br>
-            <p><b>Ngân hàng:</b> TMCP Việt Nam Thịnh Vượng - Ngân hàng số CAKE by VPBank</p> <br></br>
-            <p><b>Nội dung*:<i> ProShopCamOn </i></b></p> <br></br>
+            <p>
+              <b>Tên tài khoản:</b> Lê Quốc Anh
+            </p>{" "}
+            <br></br>
+            <p>
+              <b>Số tài khoản:</b> 0815929695
+            </p>{" "}
+            <br></br>
+            <p>
+              <b>Ngân hàng:</b> TMCP Việt Nam Thịnh Vượng - Ngân hàng số CAKE by
+              VPBank
+            </p>{" "}
+            <br></br>
+            <p>
+              <b>
+                Nội dung*:<i> ProShopCamOn </i>
+              </b>
+            </p>{" "}
+            <br></br>
           </div>
           <div className="form-group form-spacing">
-            <label htmlFor="bankAccount" style={{ width: '200px', display: 'inline-block' }}><b>Số tài khoản ngân hàng:</b></label>
+            <label
+              htmlFor="bankAccount"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Số tài khoản ngân hàng:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -210,7 +238,12 @@ const PaymentPage = (props) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="name" style={{ width: '200px', display: 'inline-block' }}><b>Họ và tên:</b></label>
+            <label
+              htmlFor="name"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Họ và tên:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -220,7 +253,12 @@ const PaymentPage = (props) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="bank" style={{ width: '200px', display: 'inline-block' }}><b>Ngân hàng:</b></label>
+            <label
+              htmlFor="bank"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Ngân hàng:</b>
+            </label>
             <select
               className="form-control"
               value={bank}
@@ -240,7 +278,12 @@ const PaymentPage = (props) => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="transferContent" style={{ width: '200px', display: 'inline-block' }}><b>Nội dung chuyển khoản:</b></label>
+            <label
+              htmlFor="transferContent"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Nội dung chuyển khoản:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -251,11 +294,19 @@ const PaymentPage = (props) => {
           </div>
         </div>
       );
-    } else if (selectedMethod === 'atmCard' || selectedMethod === 'internationalCard') {
+    } else if (
+      selectedMethod === "atmCard" ||
+      selectedMethod === "internationalCard"
+    ) {
       return (
         <div>
           <div className="form-group">
-            <label htmlFor="cardNumber" style={{ width: '150px', display: 'inline-block' }}><b>Số thẻ:</b></label>
+            <label
+              htmlFor="cardNumber"
+              style={{ width: "150px", display: "inline-block" }}
+            >
+              <b>Số thẻ:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -265,7 +316,12 @@ const PaymentPage = (props) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="expiryDate" style={{ width: '150px', display: 'inline-block' }}><b>Ngày hết hạn:</b></label>
+            <label
+              htmlFor="expiryDate"
+              style={{ width: "150px", display: "inline-block" }}
+            >
+              <b>Ngày hết hạn:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -274,44 +330,77 @@ const PaymentPage = (props) => {
               onChange={(e) => setExpiryDate(e.target.value)}
             />
           </div>
-<div className="form-group">
-            <label htmlFor="cvv" style={{ width: '150px', display: 'inline-block' }}><b>Mã CVV:</b></label>
+          <div className="form-group">
+            <label
+              htmlFor="cvv"
+              style={{ width: "150px", display: "inline-block" }}
+            >
+              <b>Mã CVV:</b>
+            </label>
             <input
               type="text"
               className="form-control"
               id="cvv"
               value={cvv}
-              onChange={(e) =>setCvv(e.target.value)}
+              onChange={(e) => setCvv(e.target.value)}
             />
           </div>
         </div>
       );
-    } else if (selectedMethod === 'cash') {
+    } else if (selectedMethod === "cash") {
       return (
         <div>
           <p>Vui lòng thanh toán tiền mặt khi nhận hàng.</p>
         </div>
       );
-    } else if (selectedMethod === 'qrCode') {
+    } else if (selectedMethod === "qrCode") {
       return (
         <div>
           <h2>Quét mã QR để thanh toán</h2>
           <div id="qrCode"></div>
         </div>
       );
-    } else if (selectedMethod === 'ewallet') {
+    } else if (selectedMethod === "ewallet") {
       return (
         <div>
-          <h3 style={{ textAlign: 'center' }}>Thông tin chuyển khoản ngân hàng</h3>
-          <h5 style={{ textAlign: 'center', marginBottom: '40px' }}> <i>Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh toán</i></h5>
+          <h3 style={{ textAlign: "center" }}>
+            Thông tin chuyển khoản ngân hàng
+          </h3>
+          <h5 style={{ textAlign: "center", marginBottom: "40px" }}>
+            {" "}
+            <i>
+              Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh
+              toán
+            </i>
+          </h5>
           <div>
-            <p><b>Tên tài khoản:</b> Lê Quốc Anh</p> <br></br>
-            <p><b>Số tài khoản:</b> 0815929695</p> <br></br>
-            <p><b>Ngân hàng:</b> TMCP Việt Nam Thịnh Vượng - Ngân hàng số CAKE by VPBank</p> <br></br>
-            <p><b>Nội dung*:<i> ProShopCamOn </i></b></p> <br></br>
+            <p>
+              <b>Tên tài khoản:</b> Lê Quốc Anh
+            </p>{" "}
+            <br></br>
+            <p>
+              <b>Số tài khoản:</b> 0815929695
+            </p>{" "}
+            <br></br>
+            <p>
+              <b>Ngân hàng:</b> TMCP Việt Nam Thịnh Vượng - Ngân hàng số CAKE by
+              VPBank
+            </p>{" "}
+            <br></br>
+            <p>
+              <b>
+                Nội dung*:<i> ProShopCamOn </i>
+              </b>
+            </p>{" "}
+            <br></br>
           </div>
           <div className="form-group">
-            <label htmlFor="ewallet" style={{ width: '200px', display: 'inline-block' }}><b>Ví điện tử:</b></label>
+            <label
+              htmlFor="ewallet"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Ví điện tử:</b>
+            </label>
             <select
               className="form-control"
               value={ewallet}
@@ -324,7 +413,12 @@ const PaymentPage = (props) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="ewalletPhoneNumber" style={{ width: '200px', display: 'inline-block' }}><b>Số điện thoại:</b></label>
+            <label
+              htmlFor="ewalletPhoneNumber"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Số điện thoại:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -334,7 +428,12 @@ const PaymentPage = (props) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="transferContent" style={{ width: '200px', display: 'inline-block' }}><b>Nội dung chuyển khoản:</b></label>
+            <label
+              htmlFor="transferContent"
+              style={{ width: "200px", display: "inline-block" }}
+            >
+              <b>Nội dung chuyển khoản:</b>
+            </label>
             <input
               type="text"
               className="form-control"
@@ -345,21 +444,36 @@ const PaymentPage = (props) => {
           </div>
         </div>
       );
-    } else if (selectedMethod === 'vnpay') {
+    } else if (selectedMethod === "vnpay") {
       return (
         <div>
-
           <div>
-
-            <h5 style={{ textAlign: 'center', marginBottom: '40px' }}> <i>Vui lòng chuyển đúng nội dung để chúng tôi có thể xácnhận thanh toán</i></h5>
-
-            <p><b>Nội dung chuyển khoản*:<i> ProShopCamOn </i></b></p> <br></br>
+            <h5 style={{ textAlign: "center", marginBottom: "40px" }}>
+              {" "}
+              <i>
+                Vui lòng chuyển đúng nội dung để chúng tôi có thể xácnhận thanh
+                toán
+              </i>
+            </h5>
+            <p>
+              <b>
+                Nội dung chuyển khoản*:<i> ProShopCamOn </i>
+              </b>
+            </p>{" "}
+            <br></br>
           </div>
-          <p>Vui lòng truy cập vào đây để thanh toán: <a href="https://sandbox.vnpayment.vn/tryitnow/Home/CreateOrder" target="_blank">https://sandbox.vnpayment.vn/tryitnow/Home/CreateOrder</a></p>
+          <p>
+            Vui lòng truy cập vào đây để thanh toán:{" "}
+            <a
+              href="https://sandbox.vnpayment.vn/tryitnow/Home/CreateOrder"
+              target="_blank"
+            >
+              https://sandbox.vnpayment.vn/tryitnow/Home/CreateOrder
+            </a>
+          </p>
         </div>
       );
-    }
-    else {
+    } else {
       return (
         <div>
           <p>Vui lòng chọn phương thức thanh toán.</p>
@@ -369,14 +483,14 @@ const PaymentPage = (props) => {
   };
 
   useEffect(() => {
-    if (selectedMethod === 'qrCode') {
+    if (selectedMethod === "qrCode") {
       //generateQRCode();
     }
   }, [selectedMethod]);
 
   if (loading) {
     return <div>Loading...</div>;
- }
+  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -390,13 +504,21 @@ const PaymentPage = (props) => {
   return (
     <div className="background-container">
       <div className="container">
-        <div className="row justify-content-center align-items-center" style={{ height: '200vh' }}>
+        <div
+          className="row justify-content-center align-items-center"
+          style={{ height: "200vh" }}
+        >
           <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
           <h1 className="text-center">THANH TOÁN</h1>
-          <div className="col-md-7 custom-column" style={{ height: '100%' }}>
-            <h3 style={{ marginBottom: '50px' }}> Thông tin khách hàng:</h3>
+          <div className="col-md-7 custom-column" style={{ height: "100%" }}>
+            <h3 style={{ marginBottom: "50px" }}> Thông tin khách hàng:</h3>
             <div className="form-group">
-              <label htmlFor="buyerName" style={{ width: '150px', display: 'inline-block' }}><b>Họ và tên:</b></label>
+              <label
+                htmlFor="buyerName"
+                style={{ width: "150px", display: "inline-block" }}
+              >
+                <b>Họ và tên:</b>
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -406,7 +528,12 @@ const PaymentPage = (props) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phoneNumber" style={{ width: '150px', display: 'inline-block' }}><b>Số điện thoại:</b></label>
+              <label
+                htmlFor="phoneNumber"
+                style={{ width: "150px", display: "inline-block" }}
+              >
+                <b>Số điện thoại:</b>
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -416,7 +543,12 @@ const PaymentPage = (props) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="address" style={{ width: '150px', display: 'inline-block' }}><b>Địa chỉ:</b></label>
+              <label
+                htmlFor="address"
+                style={{ width: "150px", display: "inline-block" }}
+              >
+                <b>Địa chỉ:</b>
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -425,36 +557,68 @@ const PaymentPage = (props) => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <h3 style={{ marginTop: '50px', marginBottom: '50px' }}> Sản phẩm: </h3>
+            <h3 style={{ marginTop: "50px", marginBottom: "50px" }}>
+              {" "}
+              Sản phẩm:{" "}
+            </h3>
             <div className="row no-gutters">
-              <div className="col-md-4" style={{ padding: '0 10px' }}>
+              <div className="col-md-4" style={{ padding: "0 10px" }}>
                 <div className="" style={{ width: "100%", height: "100%" }}>
                   <img
                     class="hover-c"
                     src={`https://media-api-beta.thinkpro.vn/${imageSelected}`}
                     alt=""
-                    style={{ width: "80%", height: "80%", objectFit: "contain" }}
-                onClick={() => handlePreviewImage(`https://media-api-beta.thinkpro.vn/${imageSelected}`)}
+                    style={{
+                      width: "80%",
+                      height: "80%",
+                      objectFit: "contain",
+                    }}
+                    onClick={() =>
+                      handlePreviewImage(
+                        `https://media-api-beta.thinkpro.vn/${imageSelected}`
+                      )
+                    }
                   />
                 </div>
               </div>
-              <div className="col-md-8" style={{ padding: '0 10px' }}>
+              <div className="col-md-8" style={{ padding: "0 10px" }}>
                 <div className="form-group">
-                  <label htmlFor="productName" style={{ width: '150px', display: 'inline-block' }}><b>Tên sản phẩm:</b></label>
+                  <label
+                    htmlFor="productName"
+                    style={{ width: "150px", display: "inline-block" }}
+                  >
+                    <b>Tên sản phẩm:</b>
+                  </label>
                   {product.model.name}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="quantity" style={{ width: '150px', display: 'inline-block' }}><b>Số lượng:</b></label>
+                  <label
+                    htmlFor="quantity"
+                    style={{ width: "150px", display: "inline-block" }}
+                  >
+                    <b>Số lượng:</b>
+                  </label>
                   <Counter onQuantityChange={handleQuantityChange} />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="totalPrice" style={{ width: '150px', display: 'inline-block' }}><b>Tổng tiền:</b></label>
+                  <label
+                    htmlFor="totalPrice"
+                    style={{ width: "150px", display: "inline-block" }}
+                  >
+                    <b>Tổng tiền:</b>
+                  </label>
                   <div className="d-flex">
-                {totalPrice !== null && (
-                      <p style={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>
-                        {totalPrice.toLocaleString('it-IT', {
-                          style: 'currency',
-                          currency: 'VND'
+                    {totalPrice !== null && (
+                      <p
+                        style={{
+                          fontSize: "20px",
+                          color: "red",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {totalPrice.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
                         })}
                       </p>
                     )}
@@ -464,9 +628,9 @@ const PaymentPage = (props) => {
             </div>
           </div>
           <div className="col-md-1 custom-column"></div>
-          <div className="col-md-4 custom-column" style={{ height: '100%' }}>
+          <div className="col-md-4 custom-column" style={{ height: "100%" }}>
             <div className="d-flex flex-column align-items-center">
-              <h3 style={{ marginBottom: '50px' }}> Phương thức thanh toán</h3>
+              <h3 style={{ marginBottom: "50px" }}> Phương thức thanh toán</h3>
               <select
                 className="form-control"
                 value={selectedMethod}
@@ -481,18 +645,18 @@ const PaymentPage = (props) => {
                 <option value="ewallet">Ví điện tử</option>
                 <option value="vnpay">VNPay</option>
               </select>
-              <div className="text-center mt-4">
-                {renderPaymentForm()}
-              </div>
+              <div className="text-center mt-4">{renderPaymentForm()}</div>
               <div className="text-center mt-4">
                 <button
                   className="btn btn-primary"
-                  onClick={() => handlePayment(productName, quantity, setQuantity)}
+                  onClick={() =>
+                    handlePayment(productName, quantity, setQuantity)
+                  }
                   style={{
-                    height: '40px',
-                    width: '200px',
-                    fontSize: '17px',
-                    fontWeight: 'bold'
+                    height: "40px",
+                    width: "200px",
+                    fontSize: "17px",
+                    fontWeight: "bold",
                   }}
                 >
                   Thanh toán
@@ -501,102 +665,129 @@ const PaymentPage = (props) => {
             </div>
           </div>
           <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)'
-          },
-          content: {
-            width: '500px',
-            height: '250px',
-            margin: 'auto',
-            fontSize: '17px'
-          }
-        }}
-      >
-        <h3 style={{ textAlign: 'center', marginBottom: '30px', marginTop: '15px' }}>XÁC NHẬN THANH TOÁN</h3>
-        <p style={{ textAlign: 'center', marginBottom: '50px' }}>Bạn có chắc chắn muốn thanh toán không?</p>
-        <div style={{ display: 'flex' }}>
-          <button
-            onClick={handleConfirmOrder}
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
             style={{
-              marginLeft: '120px',
-              width: '70px',
-              height: '40px',
-              borderRadius: '5px',
-              fontWeight: 'bold',
-              backgroundColor: '#7efff5',
-              borderColor: '#7efff5'
+              overlay: {
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+              },
+              content: {
+                width: "500px",
+                height: "250px",
+                margin: "auto",
+                fontSize: "17px",
+              },
             }}
           >
-            Có
-          </button>
-          <button
-            onClick={() => setIsModalOpen(false)}
-            style={{
-              marginLeft: '60px',
-              width: '100px',
-              height: '40px',
-              borderRadius: '5px',
-              fontWeight: 'bold',
-              backgroundColor: '#fc5c65',
-              borderColor: '#fc5c65'
-            }}
-          >
-            Không
-          </button>
-        </div>
-      </Modal>
-      {paymentConfirmed && (
-        <Modal
-          isOpen={paymentConfirmed}
-          onRequestClose={() => setPaymentConfirmed(false)}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.5)'
-            },
-            content: {
-              width: '500px',
-              height: '250px',
-              margin: 'auto',
-              fontSize: '17px'
-            }
-          }}
-        >
-          <h3 style={{ textAlign: 'center', marginBottom: '30px', marginTop: '15px' }}>ĐẶT HÀNG THÀNH CÔNG</h3>
-          <p style={{ textAlign: 'center', marginBottom: '50px' }}>Bạn đã đặt đơn hàng thành công</p>
-          <div style={{display: 'flex' }}>
-              <button onClick={() => {
-                setPaymentConfirmed(false);
-                navigate('/');
+            <h3
+              style={{
+                textAlign: "center",
+                marginBottom: "30px",
+                marginTop: "15px",
               }}
-                style={{ 
-                  marginLeft: '30px',
-                 width: '250px', 
-                 height: '40px',
-                 borderRadius: '5px',
-                fontWeight: 'bold',
-                 backgroundColor: '#7efff5',
-                 borderColor: '#7efff5'
-                  }}>Tiếp tục mua sắm</button>
-              <button onClick={() => {
-                setPaymentConfirmed(false);
-                navigate(`/order/${orderId}`);
-              }}
+            >
+              XÁC NHẬN THANH TOÁN
+            </h3>
+            <p style={{ textAlign: "center", marginBottom: "50px" }}>
+              Bạn có chắc chắn muốn thanh toán không?
+            </p>
+            <div style={{ display: "flex" }}>
+              <button
+                onClick={handleOKNow}
                 style={{
-                  marginLeft: '30px',
-                  width: '250px',
-                  height: '40px',
-                  borderRadius: '5px',
-                  fontWeight: 'bold',
-                  backgroundColor: '#dfe6e9',
-                  borderColor: '#dfe6e9'
+                  marginLeft: "120px",
+                  width: "70px",
+                  height: "40px",
+                  borderRadius: "5px",
+                  fontWeight: "bold",
+                  backgroundColor: "#7efff5",
+                  borderColor: "#7efff5",
                 }}
-              >Xem chi tiết đơn hàng</button>
+              >
+                Có
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                style={{
+                  marginLeft: "60px",
+                  width: "100px",
+                  height: "40px",
+                  borderRadius: "5px",
+                  fontWeight: "bold",
+                  backgroundColor: "#fc5c65",
+                  borderColor: "#fc5c65",
+                }}
+              >
+                Không
+              </button>
             </div>
-        </Modal>
-      )}
+          </Modal>
+          {paymentConfirmed && (
+            <Modal
+              isOpen={paymentConfirmed}
+              onRequestClose={() => setPaymentConfirmed(false)}
+              style={{
+                overlay: {
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                },
+                content: {
+                  width: "500px",
+                  height: "250px",
+                  margin: "auto",
+                  fontSize: "17px",
+                },
+              }}
+            >
+              <h3
+                style={{
+                  textAlign: "center",
+                  marginBottom: "30px",
+                  marginTop: "15px",
+                }}
+              >
+                ĐẶT HÀNG THÀNH CÔNG
+              </h3>
+              <p style={{ textAlign: "center", marginBottom: "50px" }}>
+                Bạn đã đặt đơn hàng thành công
+              </p>
+              <div style={{ display: "flex" }}>
+                <button
+                  onClick={() => {
+                    setPaymentConfirmed(false);
+                    navigate("/");
+                  }}
+                  style={{
+                    marginLeft: "30px",
+                    width: "250px",
+                    height: "40px",
+                    borderRadius: "5px",
+                    fontWeight: "bold",
+                    backgroundColor: "#7efff5",
+                    borderColor: "#7efff5",
+                  }}
+                >
+                  Tiếp tục mua sắm
+                </button>
+                <button
+                  onClick={() => {
+                    setPaymentConfirmed(false);
+                    navigate(`/order/${orderId}`);
+                  }}
+                  style={{
+                    marginLeft: "30px",
+                    width: "250px",
+                    height: "40px",
+                    borderRadius: "5px",
+                    fontWeight: "bold",
+                    backgroundColor: "#dfe6e9",
+                    borderColor: "#dfe6e9",
+                  }}
+                >
+                  Xem chi tiết đơn hàng
+                </button>
+              </div>
+            </Modal>
+          )}
         </div>
       </div>
     </div>
