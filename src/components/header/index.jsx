@@ -20,8 +20,8 @@ const Header = () =>{
                 <Link to="/home">
                     <img src="/logo-thinkpro.svg" alt="logo" style={{height: '40px'}}/>
                 </Link>
-                <form className="search" onSubmit={handleSearch}>
-                    <input className="form-control" type="text" placeholder='Tên sản phẩm, nhu cầu, hàng' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+                <form className="search" onSubmit={handleSearch} style={{ marginTop: '20px'}}>
+                    <input className="form-control" type="text" placeholder='Tìm kiếm....' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
                     <Link to={`/products/search?name=${searchQuery}`}
                     className="search-button">
                     </Link>
@@ -62,6 +62,9 @@ const Header = () =>{
                 </nav>
                 <div className="spacer"></div>
                 <Auth />
+                <div className="nav-item">
+                            <i className="bi bi-cart-fill"></i>
+                </div>
             </div>
         </header>
     )

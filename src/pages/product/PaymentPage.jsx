@@ -93,6 +93,7 @@ const PaymentPage = (props) => {
         if (response) {
           setProduct(response.data);
           console.log(response.data);
+          setImageSelected(response.data.assets[0].src);
           setTotalPrice(response.data.model.price * quantity);
         } else {
           setError("Error: Product not found");
@@ -451,7 +452,7 @@ const PaymentPage = (props) => {
             <h5 style={{ textAlign: "center", marginBottom: "40px" }}>
               {" "}
               <i>
-                Vui lòng chuyển đúng nội dung để chúng tôi có thể xácnhận thanh
+                Vui lòng chuyển đúng nội dung để chúng tôi có thể xác nhận thanh
                 toán
               </i>
             </h5>
@@ -502,11 +503,12 @@ const PaymentPage = (props) => {
   };
 
   return (
-    <div className="background-container">
-      <div className="container">
+    < div className="background-container-1">
+       <div className="bg-body rounded" style={{marginLeft: '100px', marginRight: '100px'}}>
+      <div className="container-1">
         <div
           className="row justify-content-center align-items-center"
-          style={{ height: "200vh" }}
+          style={{ height: "140vh" }}
         >
           <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
           <h1 className="text-center">THANH TOÁN</h1>
@@ -569,8 +571,8 @@ const PaymentPage = (props) => {
                     src={`https://media-api-beta.thinkpro.vn/${imageSelected}`}
                     alt=""
                     style={{
-                      width: "80%",
-                      height: "80%",
+                      width: "90%",
+                      height: "90%",
                       objectFit: "contain",
                     }}
                     onClick={() =>
@@ -790,6 +792,46 @@ const PaymentPage = (props) => {
           )}
         </div>
       </div>
+      <div className='image'>
+      <div className=" bank-images">
+        <div>
+            <h5 style={{marginBottom: '30px', marginLeft: '50px'}}>Chấp nhận thẻ của các ngân hàng:</h5>
+            <div className="bank-row">
+              <img src={require('../../images/ACB.png')} alt="ACB" />
+              <img src={require('../../images/BIDV.jpg')} alt="BIDV" />
+              <img src={require('../../images/MBBank.png')} alt="MBBank" />
+              <img src={require('../../images/NamABank.png')} alt="NamABank" />
+            </div>
+            <div className="bank-row">
+              <img src={require('../../images/TPBank.png')} alt="TPBank" />
+              <img src={require('../../images/VPBank.png')} alt="VPBank" />
+              <img src={require('../../images/Vietcombank.jpg')} alt="Vietcombank" />
+              <img src={require('../../images/Viettinbank.png')} alt="ViettinBank" />
+            </div>
+            <div className="bank-row">
+            <img src={require('../../images/SeABank.png')} alt="SeABank" />
+              <img src={require('../../images/agribank.png')} alt="Agribank" />
+              <img src={require('../../images/Techcombank.png')} alt="Techcombank" />
+              <img src={require('../../images/sacombank.png')} alt="Sacombank" />
+            </div>
+            </div>
+            </div>
+            <div className='ewallet'>
+              <h5 style={{marginBottom:'30px'}}>Chấp nhận các ví điện tử:</h5>
+              <div className="bank-row-1">
+                <img src={require('../../images/Momo.png')} alt="Momo" />
+                <img src={require('../../images/ZaloPay.png')} alt="ZaloPay" />
+              </div>
+            </div>
+            <div className='paymentPort' >
+              <h5 style={{marginBottom:'30px'}} >Chấp nhận thanh toán qua cổng thanh toán: </h5>
+              <div className="bank-row-2">
+                <img src={require('../../images/VNPay.png')} alt="VNPay" />
+              </div>
+            </div>
+            </div>
+          </div>
+
     </div>
   );
 };
