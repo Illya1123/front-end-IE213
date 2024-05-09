@@ -13,20 +13,12 @@ const Header = () =>{
         e.preventDefault();
         navigate(`/products/search?name=${searchQuery}`);
     };
-    const cartIcon = document.querySelector('#cart-icon');
-    const cart = document.querySelector('.cart');
-    const closeCart = document.querySelector('.close-btn');
-    cartIcon.onclick = () => {
-        cart.classList.add("active");
-    }
-    closeCart.onclick = () => {
-        cart.classList.remove("active");
-    }
+
     return(
         <header className='header'>
             <div className="container d-flex align-items-center h-100">
                 <Link to="/home">
-                    <img src="/logo-thinkpro.svg" alt="logo" style={{height: '50px'}}/>
+                    <img src="/logo-thinkpro.svg" alt="logo" style={{height: '40px'}}/>
                 </Link>
                 <form className="search" onSubmit={handleSearch}>
                     <input className="form-control" type="text" placeholder='Tên sản phẩm, nhu cầu, hàng' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
@@ -70,27 +62,6 @@ const Header = () =>{
                 </nav>
                 <div className="spacer"></div>
                 <Auth />
-                <div>
-                    <i className='icon' id='cart-icon'>
-                        <img src="shopping-cart.png" alt="shoppingcart" style={{height:'30px'}}/>
-                    </i>
-                    <div className="cart">
-                        <h2 className='cart-title'>Giỏ hàng</h2>
-
-                        <div className="cart-content">
-                            <div className="cart-box"></div>
-
-                        </div>
-                        <div className='total'>
-                        <div className='total-tittle'>Tổng:</div>
-                        <div className='total-price'>0đ</div>
-                        </div>
-                        <button type='button' className='buy-btn'>Mua hàng</button>
-                        <button type='button' className='close-btn'>
-                            <img src='close.png' style={{height:'20px'}} ></img>
-                        </button>
-                    </div>
-                </div>
             </div>
         </header>
     )
