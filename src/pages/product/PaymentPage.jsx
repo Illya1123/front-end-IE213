@@ -75,10 +75,12 @@ const PaymentPage = (props) => {
       console.log(orderData);
       setOrder(response.data);
       setOrderId(response.data._id);
-      setPaymentConfirmed(true);
+      //setPaymentConfirmed(true);
     } catch (error) {
       console.error("Error creating order", error);
     }
+
+    setPaymentConfirmed(true);
 };
 
   const handleQuantityChange = (newQuantity) => {
@@ -733,13 +735,15 @@ const PaymentPage = (props) => {
                   backgroundColor: "rgba(0, 0, 0, 0.5)",
                 },
                 content: {
-                  width: "500px",
-                  height: "250px",
+                  width: "700px",
+                  height: "350px",
                   margin: "auto",
                   fontSize: "17px",
                 },
               }}
             >
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+             <img src={require('../../images/tick.jpg')} alt="Success" style={{ width: '60px', height: '60px' }} />
               <h3
                 style={{
                   textAlign: "center",
@@ -773,7 +777,7 @@ const PaymentPage = (props) => {
                 <button
                   onClick={() => {
                     setPaymentConfirmed(false);
-                    navigate(`/order/${orderId}`);
+                    navigate(`/orders/${orderId}`);
                   }}
                   style={{
                     marginLeft: "30px",
@@ -787,6 +791,7 @@ const PaymentPage = (props) => {
                 >
                   Xem chi tiết đơn hàng
                 </button>
+              </div>
               </div>
             </Modal>
           )}
