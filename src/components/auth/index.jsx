@@ -52,7 +52,12 @@ const Auth = () => {
     const fetchUserData = async () => {
       try {
         const response = await http.get(
-          `/users/${username}`
+          `/users/${username}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
         );
         if( response) {
           setUserData(response.data);
