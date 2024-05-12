@@ -11,7 +11,6 @@ import http from "../../utils/request";
 import Counter from "./counter";
 import Swal from "sweetalert2";
 
-
 const ProductDetail = (props) => {
   const { productInfo } = window.location.state || {};
   const { id } = useParams();
@@ -32,7 +31,7 @@ const ProductDetail = (props) => {
   };
 
   const handleBuyNow = () => {
-    navigate(`/payment/${id}`, { state: { quantity, selectedOptions } }); 
+    navigate(`/payment/${id}`, { state: { quantity, selectedOptions } });
   };
 
   useEffect(() => {
@@ -53,7 +52,7 @@ const ProductDetail = (props) => {
 
   const handlePreviewImage = (url) => {
     Swal.fire({
-      width: '1200px',
+      width: "1200px",
       showCloseButton: true,
       showConfirmButton: false,
       html: `
@@ -89,7 +88,11 @@ const ProductDetail = (props) => {
                       height: "100%",
                       objectFit: "contain",
                     }}
-                    onClick={() => handlePreviewImage(`https://media-api-beta.thinkpro.vn/${imageSelected}`)}
+                    onClick={() =>
+                      handlePreviewImage(
+                        `https://media-api-beta.thinkpro.vn/${imageSelected}`
+                      )
+                    }
                   />
                 </div>
                 <hr />
@@ -110,20 +113,22 @@ const ProductDetail = (props) => {
                     >
                       <div
                         className={
-                          image.src === imageSelected ? 'img-selected  hover-c' : 'hover-c'
+                          image.src === imageSelected
+                            ? "img-selected  hover-c"
+                            : "hover-c"
                         }
                         style={{
                           backgroundImage: `url(${image.src})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                          width: '100%',
-                          height: '100%',
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          width: "100%",
+                          height: "100%",
                         }}
                       >
-                      <img
+                        <img
                           src={`https://images.thinkgroup.vn/unsafe/212x212/https://media-api-beta.thinkpro.vn/${image.src}`}
                           alt="section-banner"
-                      />
+                        />
                       </div>
                     </SwiperSlide>
                   ))}
@@ -139,16 +144,23 @@ const ProductDetail = (props) => {
                   <strong>{product.model.name}</strong>
                 </p>
                 <hr />
-                <div className="variable" style={{ fontSize: '14px' }}>
+                <div className="variable" style={{ fontSize: "14px" }}>
                   {product.variations.map((item) => (
                     <div className="variable" key={item.name}>
-                      <h3 style={{ fontSize: '16px', opacity: 0.9 }}>{item.label}</h3>
-                      <div className="d-flex flex-wrap gx-3 gy-3" style={{ margin: 0 }}>
+                      <h3 style={{ fontSize: "16px", opacity: 0.9 }}>
+                        {item.label}
+                      </h3>
+                      <div
+                        className="d-flex flex-wrap gx-3 gy-3"
+                        style={{ margin: 0 }}
+                      >
                         {item.options.map((option) => (
                           <div
                             className="alert alert-secondary bg-white text-center m-1 px-3 py-1"
                             key={option.name}
-                            onClick={() => handleOptionChange(item.name, option.name)}
+                            onClick={() =>
+                              handleOptionChange(item.name, option.name)
+                            }
                           >
                             {option.name}
                           </div>
@@ -158,7 +170,7 @@ const ProductDetail = (props) => {
                   ))}
                 </div>
                 <div className="counter mt-3">
-                  <h3 style={{ fontSize: '16px', opacity: 0.9 }}>Số lượng</h3>
+                  <h3 style={{ fontSize: "16px", opacity: 0.9 }}>Số lượng</h3>
                   <div className="d-flex">
                     <Counter />
                   </div>
@@ -197,18 +209,16 @@ const ProductDetail = (props) => {
             <div className="card-body">
               <h2 style={{ fontSize: "1.6em" }}>Cấu hình đặc điểm</h2>
               <div className="row" style={{ fontSize: "0.9em" }}>
-                {product.attributes.map(attribute => (
+                {product.attributes.map((attribute) => (
                   <div className="col-6 mt-3" key={attribute.groupName}>
                     <p>
                       <strong>{attribute.groupName}</strong>
                     </p>
-                    {
-                      attribute.items.map(item => (
-                        <p key={item.label}>
-                          <span>{item.label}</span> : <span> {item.value}</span>
-                        </p>
-                      ))
-                    }
+                    {attribute.items.map((item) => (
+                      <p key={item.label}>
+                        <span>{item.label}</span> : <span> {item.value}</span>
+                      </p>
+                    ))}
                   </div>
                 ))}
               </div>
@@ -222,20 +232,19 @@ const ProductDetail = (props) => {
               </ul>
               <hr />
               <h2 style={{ fontSize: "1.6em" }}>Bài viết mô tả</h2>
-              {
-                product.article ? (
-                  <section className="section-article">
-                    <h1>{product.article.title}</h1>
-                    <p>{product.article.description}</p>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: product.article.content,
-                      }}
-                    />
-                  </section>
-                ) : '-- chưa có mô tả --'
-              }
-
+              {product.article ? (
+                <section className="section-article">
+                  <h1>{product.article.title}</h1>
+                  <p>{product.article.description}</p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: product.article.content,
+                    }}
+                  />
+                </section>
+              ) : (
+                "-- chưa có mô tả --"
+              )}
             </div>
           </div>
         </div>
