@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         element: <PaymentPage />
       },
       {
-        path:'orders/:orderID',
+        path:'orders/:orderId',
         element: <OrderDetail />
       },
       {
