@@ -1,10 +1,12 @@
 import './styles.scss';
-import {Link, useNavigate } from "react-router-dom";
-import {useState, useContext } from 'react';
-import { CategoryContext } from '../../context/category-context';
+import {Link, useNavigate} from "react-router-dom";
+import {useContext, useState} from 'react';
+import {CategoryContext} from '../../context/category-context';
 import Auth from "../auth";
+import {useCart} from "../../context/cart/cart-context";
 
 const Header = () =>{
+    const cartContext = useCart()
     const [categories] = useContext(CategoryContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
@@ -44,7 +46,7 @@ const Header = () =>{
                                 categories.map((cate) => (
                                     <div key={cate.slug} className="col-3">
                                         <Link to={`/products?cate_slug=${cate.slug}`} className="dropdown-item">
-                                            <img className="img-size-50"src={`https://images.thinkgroup.vn/unsafe/212x212/https://media-api-beta.thinkpro.vn/${cate.icon}`} alt={cate.icon} />
+                                            <img className="img-size-50" src={`https://images.thinkgroup.vn/unsafe/212x212/https://media-api-beta.thinkpro.vn/${cate.icon}`} alt={cate.icon} />
                                             <span>{cate.name}</span>
                                         </Link>
                                     </div>
@@ -62,8 +64,16 @@ const Header = () =>{
                 </nav>
                 <div className="spacer"></div>
                 <Auth />
-                <div className="nav-item">
-                            <i className="bi bi-cart-fill"></i>
+                <div className="nav-item" onClick={() => navigate(`/checkout`, {state: {}})}>
+                    <div className='position-relative'>
+                        <i className="bi bi-cart-fill"></i>
+                        {
+                            !!cartContext.items.length && <span
+                                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {cartContext.items.length}
+                            </span>
+                        }
+                    </div>
                 </div>
             </div>
         </header>

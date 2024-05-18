@@ -1,9 +1,12 @@
 import CategoryProvider from "./category-context"
+import {CartProvider} from "./cart/cart-context";
 
-const MyProviders = ({children}) =>{
-    return(
+const MyProviders = ({children}) => {
+    return (
         <CategoryProvider>
-            {children}
+            <CartProvider>
+                {children}
+            </CartProvider>
         </CategoryProvider>
     )
 }
