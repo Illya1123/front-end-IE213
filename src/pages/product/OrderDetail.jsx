@@ -3,22 +3,36 @@ import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import http from "../../utils/request";
-const OrderDetail = () => {
+const OrderDetail = ({ userId }) => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (id) {
-      axios.get(`/api/orders/${id}`)
+    // Lấy userId từ localStorage
+    
+    // Kiểm tra xem userId có tồn tại không
+    if (userId) {
+      // Gọi API để lấy thông tin đơn hàng với userId được lấy từ localStorage
+      fetch(`http://localhost:3000/orders/user/${userId}`)
         .then(response => {
-          setOrder(response.data);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setOrder(data);
+          console.log(data);
         })
         .catch(error => {
           console.error('Error fetching order:', error);
+          setError(error);
         });
+    } else {
+      setError('User ID not found in localStorage');
     }
-  }, [id]);
+  }, [userId]);
 
   const handlePreviewImage = (url) => {
     Swal.fire({

@@ -265,7 +265,7 @@ const ProductList = (props) =>{
                       ) : ''
                     }
                     {
-                      (datas.items.length == 0) ? (
+                      (datas.items.length === 0) ? (
                         <div className="d-flex justify-content-center mt-3">
                             <p><strong>Không có kết quả</strong></p>
                         </div>

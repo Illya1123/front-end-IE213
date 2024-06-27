@@ -10,7 +10,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import http from "../../utils/request";
 import Counter from "./counter";
 import Swal from "sweetalert2";
-import {useCart} from "../../context/cart/cart-context";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setCartAction } from "../../store/actions";
 
 const ProductDetail = (props) => {
   const {productInfo} = window.location.state || {};
@@ -22,14 +24,74 @@ const ProductDetail = (props) => {
   const [error, setError] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [quantity, setQuantity] = useState(1); // Initial quantity
-  const {addItemToCart} = useCart()
 
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cartReducer.cart);
+  
   const handleOptionChange = (optionName, optionValue) => {
     setSelectedOptions({...selectedOptions, [optionName]: optionValue});
   };
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
+  };
+
+  const handleAddToCart = async () => {
+    const userId = localStorage.getItem("userId");
+    const productId = typeof product._id === "string" ? product._id : String(product._id);
+  
+    try {
+      // Kiểm tra nếu cart đã tồn tại với cùng userId và productId
+      const checkCartResponse = await http.get(`http://localhost:3000/carts/${userId}/${productId}`);
+  
+      if (checkCartResponse.statusCode === 200 && checkCartResponse.data !== null) {
+        throw new Error('Sản phẩm đã có trong giỏ hàng');
+      }
+  
+      // Nếu không có cart tồn tại, thực hiện yêu cầu POST để thêm vào giỏ hàng
+      const response = await http.post('http://localhost:3000/carts', {
+        userId: userId || null,
+        products: [
+          {
+            productId: productId,
+            skuId: String(id), // Chuyển id thành chuỗi
+            img: product.assets[0].src,
+            name: product.model.name,
+            quantity: quantity,
+          }
+        ]
+      });
+  
+      if (response.statusCode === 200 || response.statusCode === 201) {
+        // Show success message
+        Swal.fire({
+          icon: "success",
+          title: "Đã thêm vào giỏ hàng",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        // Handle specific error scenarios from server response
+        let errorMessage = "Failed to add product to cart";
+        if (response.data && response.data.message) {
+          errorMessage = response.data.message;
+        }
+        throw new Error(errorMessage);
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      // Handle error scenario, e.g., show error message
+      Swal.fire({
+        icon: "error",
+        title: "Thêm vào giỏ hàng thất bại",
+        text: error.message || "Unknown error occurred",
+      });
+    }
+  };
+  
+  
+  const handleBuyNow = () => {
+    navigate(`/payment/${id}`, { state: { quantity, selectedOptions } });
   };
 
   useEffect(() => {
@@ -214,6 +276,30 @@ const ProductDetail = (props) => {
                       Mua ngay
                     </button>
                   </div>
+                </div>
+                <hr />
+                <div className="d-flex">
+                  <p
+                    style={{
+                      fontSize: "1.6em",
+                      color: "red",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {product.model.price.toLocaleString("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </p>
+                  <div className="spacer"></div>
+                  <button className="btn btn-add-cart" onClick={() => handleAddToCart()}>Thêm vào giỏ</button>
+                  <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: "8px", fontWeight: "bold" }}
+                    onClick={() => handleBuyNow(product.id, quantity)}
+                  >
+                    Mua ngay
+                  </button>
                 </div>
               </div>
             </div>

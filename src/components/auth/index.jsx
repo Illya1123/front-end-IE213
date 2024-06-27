@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import http from "../../utils/request";
 import Swal from 'sweetalert2';
-import axios from 'axios'; // Import axios for making HTTP requests
+import { useDispatch } from 'react-redux';
+import { setCurrentUserAction} from '../../store/actions/index'
 
 const Auth = () => {
   const [username, setUsername] = useState(localStorage.getItem('username') || null); // Load username từ localStorage
   const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || null); // Load accessToken từ localStorage
   const [userData, setUserData] = useState(null); // Khởi tạo state userData với giá trị ban đầu là null
+  const dispatch = useDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +27,7 @@ const Auth = () => {
           }
         }
       ).then(res => {
-        if (res.statusCode === 201) {
+        if (res.statusCode === 200 || res.statusCode === 201) {
           Swal.fire({
             icon: 'success',
             title: 'Đăng Nhập thành công!',
@@ -35,6 +37,7 @@ const Auth = () => {
           setAccessToken(res.data.accessToken); // Lưu accessToken vào state
           localStorage.setItem('username', values.username); // Lưu username vào localStorage
           localStorage.setItem('accessToken', res.data.accessToken); // Lưu accessToken vào localStorage
+          dispatch(setCurrentUserAction(res.data.accessToken));
         }
       })
     },
@@ -44,7 +47,9 @@ const Auth = () => {
     // Xóa username và accessToken từ localStorage khi đăng xuất
     if (!username) {
       localStorage.removeItem('username');
+      localStorage.removeItem('userId');
       localStorage.removeItem('accessToken');
+      dispatch(setCurrentUserAction(''));
     }
   }, [username]);
 
@@ -62,7 +67,6 @@ const Auth = () => {
         if( response) {
           setUserData(response.data);
           localStorage.setItem("userId", response.data._id);
-          console.log(response.data);
         } else {
           console.error("Error fetching user data:", response);
         }
