@@ -97,3 +97,68 @@ a{
        
     }
 }
+
+.nav-item {
+    position: relative; /* Đặt vị trí tương đối để các phần tử con có thể được định vị tuyệt đối */
+  }
+
+  .nav-item:hover {
+    background-color: rgba(var(--code-primary), 0.8);
+    cursor: pointer;
+  }
+  
+  .nav-item:hover i {
+    color: white;
+  }
+  
+  .cart-dropdown {
+    display: none; /* Mặc định ẩn dropdown */
+    position: absolute; /* Đặt dropdown tuyệt đối */
+    top: 100%; /* Đặt dropdown dưới nav-item */
+    left: -50%; /* Đặt dropdown căn trái */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px;
+    min-width: 280px;
+    max-width: 300px; /* Điều chỉnh kích thước dropdown */
+  }
+  
+  .cart-dropdown.show {
+    display: block; /* Hiển thị dropdown khi có class show */
+  }
+  
+  .cart-dropdown ul {
+    list-style-type: none; /* Ẩn dấu đầu dòng trong danh sách */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cart-dropdown ul li {
+    margin-bottom: 5px; /* Khoảng cách giữa các mục trong danh sách */
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .cart-dropdown ul li:hover {
+    border: 1px solid #007bff; /* Tô chọn viền xanh dương khi hover */
+    background-color: #f0f0f0; /* Đổi màu nền của mục đang hover */
+  }
+  
+  .cart-dropdown a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    margin-top: 10px; /* Khoảng cách từ danh sách sản phẩm đến link "Xem giỏ hàng" */
+  }
+  
+  .product-container {
+    display: flex;
+    align-items: center; /* Canh giữa các phần tử theo chiều dọc */
+  }
+  
+  .product-image {
+    margin-right: 10px; /* Khoảng cách giữa ảnh và nội dung */
+  }

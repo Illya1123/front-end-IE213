@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'; 
+import React, { useEffect, useState } from 'react'; 
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         element: <PaymentPage />
       },
       {
-        path:'orders',
+        path:'orders/user/:userId',
         element: <OrderDetail />
       },
       {
@@ -60,8 +60,15 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  const [userId, setUserId] = useState(null);
+
   useEffect(() => {
     Modal.setAppElement(document.getElementById('root'));
+
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
 }, []);
   return (
     <MyProviders>

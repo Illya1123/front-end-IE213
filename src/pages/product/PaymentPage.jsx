@@ -11,6 +11,7 @@ const PaymentPage = (props) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
   const [paymentResult, setPaymentResult] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +49,11 @@ const PaymentPage = (props) => {
     const username = localStorage.getItem("username");
     if (username) {
       setUserName(username);
+    }
+
+    const storedUserId = localStorage.getItem("userId"); // Lấy giá trị userId từ localStorage
+    if (storedUserId) {
+      setUserId(storedUserId); // Set giá trị userId vào state
     }
   }, [userName]);
 
@@ -773,7 +779,7 @@ const PaymentPage = (props) => {
                 <button
                   onClick={() => {
                     setPaymentConfirmed(false);
-                    navigate(`/order/${orderId}`);
+                    navigate(`/orders/user/${userId}`);
                   }}
                   style={{
                     marginLeft: "30px",
