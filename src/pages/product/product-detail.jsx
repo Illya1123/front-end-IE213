@@ -25,8 +25,7 @@ const ProductDetail = (props) => {
   const [quantity, setQuantity] = useState(1); // Initial quantity
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer.cart);
-  
-
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleOptionChange = (optionName, optionValue) => {
     setSelectedOptions({ ...selectedOptions, [optionName]: optionValue });
@@ -35,6 +34,14 @@ const ProductDetail = (props) => {
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
   };
+
+  useEffect(() => {
+    if (showSuccessMessage) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500); // Thời gian delay để người dùng có thể thấy thông báo thành công
+    }
+  }, [showSuccessMessage]);
 
   const handleAddToCart = async () => {
     const userId = localStorage.getItem("userId");
@@ -63,7 +70,7 @@ const ProductDetail = (props) => {
       });
   
       if (response.statusCode === 200 || response.statusCode === 201) {
-        // Show success message
+        setShowSuccessMessage(true);
         Swal.fire({
           icon: "success",
           title: "Đã thêm vào giỏ hàng",
@@ -71,8 +78,7 @@ const ProductDetail = (props) => {
           timer: 1500,
         });
       } else {
-        // Handle specific error scenarios from server response
-        let errorMessage = "Failed to add product to cart";
+        let errorMessage = "Đã có lỗi xảy ra khi thêm vào giỏ hàng";
         if (response.data && response.data.message) {
           errorMessage = response.data.message;
         }
@@ -80,7 +86,6 @@ const ProductDetail = (props) => {
       }
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      // Handle error scenario, e.g., show error message
       Swal.fire({
         icon: "error",
         title: "Thêm vào giỏ hàng thất bại",

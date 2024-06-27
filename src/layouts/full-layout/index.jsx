@@ -16,6 +16,12 @@ const FullLayout = () =>{
             <Outlet />
         </div>
         <Footer />
+        <df-messenger
+                intent="WELCOME"
+                chat-title="ProShop"
+                agent-id="ded832f8-34c0-427a-bd8d-fca403a07923"
+                language-code="vi"
+            ></df-messenger>
     </>
     )
 }

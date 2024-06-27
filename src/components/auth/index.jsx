@@ -4,13 +4,19 @@ import { useFormik } from "formik";
 import http from "../../utils/request";
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
-import { setCurrentUserAction} from '../../store/actions/index'
+import { setCurrentUserAction, setCartAction} from '../../store/actions/index'
 
 const Auth = () => {
   const [username, setUsername] = useState(localStorage.getItem('username') || null); // Load username từ localStorage
   const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || null); // Load accessToken từ localStorage
   const [userData, setUserData] = useState(null); // Khởi tạo state userData với giá trị ban đầu là null
   const dispatch = useDispatch()
+
+  const refreshPageWithDelay = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -31,13 +37,14 @@ const Auth = () => {
           Swal.fire({
             icon: 'success',
             title: 'Đăng Nhập thành công!',
-            text: ''
+            text: '3 giây sau sẽ tự động tải lại trang!'
           })
           setUsername(values.username);
           setAccessToken(res.data.accessToken); // Lưu accessToken vào state
           localStorage.setItem('username', values.username); // Lưu username vào localStorage
           localStorage.setItem('accessToken', res.data.accessToken); // Lưu accessToken vào localStorage
           dispatch(setCurrentUserAction(res.data.accessToken));
+          refreshPageWithDelay();
         }
       })
     },
@@ -50,6 +57,7 @@ const Auth = () => {
       localStorage.removeItem('userId');
       localStorage.removeItem('accessToken');
       dispatch(setCurrentUserAction(''));
+      dispatch(setCartAction([]));
     }
   }, [username]);
 
