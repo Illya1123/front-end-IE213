@@ -1,16 +1,14 @@
-
 import React, { useEffect, useState } from 'react'; 
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {FullLayout} from "./layouts";
-import {About, Home, PageNotFound, ProductDetail, ProductFound, ProductList, Register} from "./pages";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MyProviders from './context';
+import { FullLayout} from "./layouts";
+import { Home, ProductDetail, ProductList, About, PageNotFound, Register, ProductFound} from "./pages";
 import PaymentPage from "./pages/product/PaymentPage"
 import OrderDetail from './pages/product/OrderDetail';
 import Modal from 'react-modal';
-import Checkout from "./pages/checkout/Checkout";
-import CheckoutSuccess from "./pages/checkout-success/CheckoutSuccess";
 
 const router = createBrowserRouter([
   {
@@ -73,7 +71,9 @@ function App() {
     }
 }, []);
   return (
-      <RouterProvider router={router} />
+    <MyProviders>
+         <RouterProvider router={router} />
+    </MyProviders>
   );
 }
 
