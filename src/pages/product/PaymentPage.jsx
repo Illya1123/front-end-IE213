@@ -6,6 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import http from "../../utils/request";
 import Swal from "sweetalert2";
 import Counter from "./counter";
+import { country } from "../../components";
+import Select from "react-select";
 
 const PaymentPage = (props) => {
   const navigate = useNavigate();
@@ -22,7 +24,6 @@ const PaymentPage = (props) => {
   const [fullName, setFullName] = useState("");
   const [buyerName, setBuyerName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
   const [bank, setBank] = useState("");
   const [transferContent, setTransferContent] = useState("");
   const [ewallet, setEwallet] = useState("");
@@ -36,7 +37,7 @@ const PaymentPage = (props) => {
   const { productInfo } = window.location.state || {};
   const { selectedOptions } = productInfo || {};
   const [quantity, setQuantity] = useState(1);
-  const [userDataFetched, setUserDataFetched] = useState(false); 
+  const [userDataFetched, setUserDataFetched] = useState(false);
   const [totalPrice, setTotalPrice] = useState(
     product?.model?.price * quantity
   );
@@ -44,6 +45,65 @@ const PaymentPage = (props) => {
   const { orderToDetail } = props;
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedWard, setSelectedWard] = useState(null);
+  const [address, setAddress] = useState("");
+
+  const renderDistricts = () => {
+    if (!selectedCountry) return [];
+    const selectedCity = country.find(
+      (city) => city.name === selectedCountry.value
+    );
+
+    if (!selectedCity || !selectedCity.districts) return [];
+
+    return selectedCity.districts.map((district) => ({
+      label: district.name,
+      value: district.name,
+    }));
+  };
+
+  const renderWards = () => {
+    if (!selectedCountry || !selectedDistrict) return [];
+
+    const selectedCity = country.find(
+      (city) => city.name === selectedCountry.value
+    );
+
+    if (!selectedCity || !selectedCity.districts) return [];
+
+    const selectedDistrictObj = selectedCity.districts.find(
+      (district) => district.name === selectedDistrict.value
+    );
+
+    if (!selectedDistrictObj || !selectedDistrictObj.wards) return [];
+
+    return selectedDistrictObj.wards.map((ward) => ({
+      label: ward.name,
+      value: ward.name,
+    }));
+  };
+
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+    setAddress(selectedOption.label);
+    setSelectedDistrict(null);
+    setSelectedWard(null);
+  };
+
+  const handleDistrictChange = (selectedOption) => {
+    setSelectedDistrict(selectedOption);
+    setAddress(`${selectedCountry.label}, ${selectedOption.label}`);
+    setSelectedWard(null);
+  };
+
+  const handleWardChange = (selectedOption) => {
+    setSelectedWard(selectedOption);
+    setAddress(
+      `${selectedCountry.label}, ${selectedDistrict.label}, ${selectedOption.label}`
+    );
+  };
 
   useEffect(() => {
     const username = localStorage.getItem("username");
@@ -60,7 +120,8 @@ const PaymentPage = (props) => {
   const handleOKNow = async (event) => {
     event.preventDefault();
     const userId = localStorage.getItem("userId");
-    const productId = typeof product._id === "string" ? product._id : String(product._id);
+    const productId =
+      typeof product._id === "string" ? product._id : String(product._id);
 
     const orderData = {
       userId: userId || "guest",
@@ -85,7 +146,7 @@ const PaymentPage = (props) => {
     } catch (error) {
       console.error("Error creating order", error);
     }
-};
+  };
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
@@ -509,231 +570,215 @@ const PaymentPage = (props) => {
   };
 
   return (
-    < div className="background-container-1">
-       <div className="bg-body rounded" style={{marginLeft: '100px', marginRight: '100px'}}>
-      <div className="container-1">
-        <div
-          className="row justify-content-center align-items-center"
-          style={{ height: "140vh" }}
-        >
-          <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
-          <h1 className="text-center">THANH TOÁN</h1>
-          <div className="col-md-7 custom-column" style={{ height: "100%" }}>
-            <h3 style={{ marginBottom: "50px" }}> Thông tin khách hàng:</h3>
-            <div className="form-group">
-              <label
-                htmlFor="buyerName"
-                style={{ width: "150px", display: "inline-block" }}
-              >
-                <b>Họ và tên:</b>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="buyerName"
-                value={buyerName}
-                onChange={(e) => setBuyerName(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label
-                htmlFor="phoneNumber"
-                style={{ width: "150px", display: "inline-block" }}
-              >
-                <b>Số điện thoại:</b>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="phoneNumber"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label
-                htmlFor="address"
-                style={{ width: "150px", display: "inline-block" }}
-              >
-                <b>Địa chỉ:</b>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <h3 style={{ marginTop: "50px", marginBottom: "50px" }}>
-              {" "}
-              Sản phẩm:{" "}
-            </h3>
-            <div className="row no-gutters">
-              <div className="col-md-4" style={{ padding: "0 10px" }}>
-                <div className="" style={{ width: "100%", height: "100%" }}>
-                  <img
-                    class="hover-c"
-                    src={`https://media-api-beta.thinkpro.vn/${imageSelected}`}
-                    alt=""
-                    style={{
-                      width: "90%",
-                      height: "90%",
-                      objectFit: "contain",
-                    }}
-                    onClick={() =>
-                      handlePreviewImage(
-                        `https://media-api-beta.thinkpro.vn/${imageSelected}`
-                      )
-                    }
-                  />
-                </div>
+    <div className="background-container-1">
+      <div
+        className="bg-body rounded"
+        style={{ marginLeft: "100px", marginRight: "100px" }}
+      >
+        <div className="container-1">
+          <div
+            className="row justify-content-center align-items-center"
+            style={{ height: "140vh" }}
+          >
+            <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
+            <h1 className="text-center">THANH TOÁN</h1>
+            <div className="col-md-7 custom-column" style={{ height: "100%" }}>
+              <h3 style={{ marginBottom: "50px" }}> Thông tin khách hàng:</h3>
+              <div className="form-group">
+                <label
+                  htmlFor="buyerName"
+                  style={{ width: "150px", display: "inline-block" }}
+                >
+                  <b>Họ và tên:</b>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="buyerName"
+                  value={buyerName}
+                  onChange={(e) => setBuyerName(e.target.value)}
+                />
               </div>
-              <div className="col-md-8" style={{ padding: "0 10px" }}>
-                <div className="form-group">
-                  <label
-                    htmlFor="productName"
-                    style={{ width: "150px", display: "inline-block" }}
-                  >
-                    <b>Tên sản phẩm:</b>
-                  </label>
-                  {product.model.name}
+              <div className="form-group">
+                <label
+                  htmlFor="phoneNumber"
+                  style={{ width: "150px", display: "inline-block" }}
+                >
+                  <b>Số điện thoại:</b>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="phoneNumber"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label
+                  htmlFor="phoneNumber"
+                  style={{ width: "150px", display: "inline-block" }}
+                >
+                  <b>Chọn địa chỉ:</b>
+                </label>
+                <Select
+                  className="custom-select"
+                  options={country.map((c) => ({
+                    label: c.name,
+                    value: c.name,
+                  }))}
+                  onChange={handleCountryChange}
+                  value={selectedCountry}
+                  placeholder="Chọn tỉnh/thành phố"
+                />
+                {selectedCountry && (
+                  <Select
+                    className="custom-select"
+                    options={renderDistricts()}
+                    onChange={handleDistrictChange}
+                    value={selectedDistrict}
+                    placeholder="Chọn quận/huyện"
+                  />
+                )}
+                {selectedDistrict && (
+                  <Select
+                    className="custom-select"
+                    options={renderWards()}
+                    onChange={handleWardChange}
+                    value={selectedWard}
+                    placeholder="Chọn xã/phường"
+                  />
+                )}
+              </div>
+
+              <div className="form-group">
+                <label
+                  htmlFor="address"
+                  style={{ width: "150px", display: "inline-block" }}
+                >
+                  <b>Địa chỉ:</b>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="address"
+                  value={address}
+                  readOnly
+                />
+              </div>
+              <h3 style={{ marginTop: "50px", marginBottom: "50px" }}>
+                {" "}
+                Sản phẩm:{" "}
+              </h3>
+              <div className="row no-gutters">
+                <div className="col-md-4" style={{ padding: "0 10px" }}>
+                  <div className="" style={{ width: "100%", height: "100%" }}>
+                    <img
+                      class="hover-c"
+                      src={`https://media-api-beta.thinkpro.vn/${imageSelected}`}
+                      alt=""
+                      style={{
+                        width: "90%",
+                        height: "90%",
+                        objectFit: "contain",
+                      }}
+                      onClick={() =>
+                        handlePreviewImage(
+                          `https://media-api-beta.thinkpro.vn/${imageSelected}`
+                        )
+                      }
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label
-                    htmlFor="quantity"
-                    style={{ width: "150px", display: "inline-block" }}
-                  >
-                    <b>Số lượng:</b>
-                  </label>
-                  <Counter onQuantityChange={handleQuantityChange} />
-                </div>
-                <div className="form-group">
-                  <label
-                    htmlFor="totalPrice"
-                    style={{ width: "150px", display: "inline-block" }}
-                  >
-                    <b>Tổng tiền:</b>
-                  </label>
-                  <div className="d-flex">
-                    {totalPrice !== null && (
-                      <p
-                        style={{
-                          fontSize: "20px",
-                          color: "red",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {totalPrice.toLocaleString("it-IT", {
-                          style: "currency",
-                          currency: "VND",
-                        })}
-                      </p>
-                    )}
+                <div className="col-md-8" style={{ padding: "0 10px" }}>
+                  <div className="form-group">
+                    <label
+                      htmlFor="productName"
+                      style={{ width: "150px", display: "inline-block" }}
+                    >
+                      <b>Tên sản phẩm:</b>
+                    </label>
+                    {product.model.name}
+                  </div>
+                  <div className="form-group">
+                    <label
+                      htmlFor="quantity"
+                      style={{ width: "150px", display: "inline-block" }}
+                    >
+                      <b>Số lượng:</b>
+                    </label>
+                    <Counter onQuantityChange={handleQuantityChange} />
+                  </div>
+                  <div className="form-group">
+                    <label
+                      htmlFor="totalPrice"
+                      style={{ width: "150px", display: "inline-block" }}
+                    >
+                      <b>Tổng tiền:</b>
+                    </label>
+                    <div className="d-flex">
+                      {totalPrice !== null && (
+                        <p
+                          style={{
+                            fontSize: "20px",
+                            color: "red",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {totalPrice.toLocaleString("it-IT", {
+                            style: "currency",
+                            currency: "VND",
+                          })}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-md-1 custom-column"></div>
-          <div className="col-md-4 custom-column" style={{ height: "100%" }}>
-            <div className="d-flex flex-column align-items-center">
-              <h3 style={{ marginBottom: "50px" }}> Phương thức thanh toán</h3>
-              <select
-                className="form-control"
-                value={selectedMethod}
-                onChange={(e) => setSelectedMethod(e.target.value)}
-              >
-                <option value="">Chọn phương thức thanh toán</option>
-                <option value="cash">Tiền mặt</option>
-                <option value="bankTransfer">Chuyển khoản</option>
-                <option value="atmCard">Thẻ ATM</option>
-                <option value="internationalCard">Thẻ quốc tế</option>
-                <option value="qrCode">Mã QR</option>
-                <option value="ewallet">Ví điện tử</option>
-                <option value="vnpay">VNPay</option>
-              </select>
-              <div className="text-center mt-4">{renderPaymentForm()}</div>
-              <div className="text-center mt-4">
-                <button
-                  className="btn btn-primary"
-                  onClick={() =>
-                    handlePayment(productName, quantity, setQuantity)
-                  }
-                  style={{
-                    height: "40px",
-                    width: "200px",
-                    fontSize: "17px",
-                    fontWeight: "bold",
-                  }}
+            <div className="col-md-1 custom-column"></div>
+            <div className="col-md-4 custom-column" style={{ height: "100%" }}>
+              <div className="d-flex flex-column align-items-center">
+                <h3 style={{ marginBottom: "50px" }}>
+                  {" "}
+                  Phương thức thanh toán
+                </h3>
+                <select
+                  className="form-control"
+                  value={selectedMethod}
+                  onChange={(e) => setSelectedMethod(e.target.value)}
                 >
-                  Thanh toán
-                </button>
+                  <option value="">Chọn phương thức thanh toán</option>
+                  <option value="cash">Tiền mặt</option>
+                  <option value="bankTransfer">Chuyển khoản</option>
+                  <option value="atmCard">Thẻ ATM</option>
+                  <option value="internationalCard">Thẻ quốc tế</option>
+                  <option value="qrCode">Mã QR</option>
+                  <option value="ewallet">Ví điện tử</option>
+                  <option value="vnpay">VNPay</option>
+                </select>
+                <div className="text-center mt-4">{renderPaymentForm()}</div>
+                <div className="text-center mt-4">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      handlePayment(productName, quantity, setQuantity)
+                    }
+                    style={{
+                      height: "40px",
+                      width: "200px",
+                      fontSize: "17px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Thanh toán
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-            style={{
-              overlay: {
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-              },
-              content: {
-                width: "500px",
-                height: "250px",
-                margin: "auto",
-                fontSize: "17px",
-              },
-            }}
-          >
-            <h3
-              style={{
-                textAlign: "center",
-                marginBottom: "30px",
-                marginTop: "15px",
-              }}
-            >
-              XÁC NHẬN THANH TOÁN
-            </h3>
-            <p style={{ textAlign: "center", marginBottom: "50px" }}>
-              Bạn có chắc chắn muốn thanh toán không?
-            </p>
-            <div style={{ display: "flex" }}>
-              <button
-                onClick={handleOKNow}
-                style={{
-                  marginLeft: "120px",
-                  width: "70px",
-                  height: "40px",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  backgroundColor: "#7efff5",
-                  borderColor: "#7efff5",
-                }}
-              >
-                Có
-              </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                style={{
-                  marginLeft: "60px",
-                  width: "100px",
-                  height: "40px",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  backgroundColor: "#fc5c65",
-                  borderColor: "#fc5c65",
-                }}
-              >
-                Không
-              </button>
-            </div>
-          </Modal>
-          {paymentConfirmed && (
             <Modal
-              isOpen={paymentConfirmed}
-              onRequestClose={() => setPaymentConfirmed(false)}
+              isOpen={isModalOpen}
+              onRequestClose={() => setIsModalOpen(false)}
               style={{
                 overlay: {
                   backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -753,20 +798,17 @@ const PaymentPage = (props) => {
                   marginTop: "15px",
                 }}
               >
-                ĐẶT HÀNG THÀNH CÔNG
+                XÁC NHẬN THANH TOÁN
               </h3>
               <p style={{ textAlign: "center", marginBottom: "50px" }}>
-                Bạn đã đặt đơn hàng thành công
+                Bạn có chắc chắn muốn thanh toán không?
               </p>
               <div style={{ display: "flex" }}>
                 <button
-                  onClick={() => {
-                    setPaymentConfirmed(false);
-                    navigate("/");
-                  }}
+                  onClick={handleOKNow}
                   style={{
-                    marginLeft: "30px",
-                    width: "250px",
+                    marginLeft: "120px",
+                    width: "70px",
                     height: "40px",
                     borderRadius: "5px",
                     fontWeight: "bold",
@@ -774,70 +816,153 @@ const PaymentPage = (props) => {
                     borderColor: "#7efff5",
                   }}
                 >
-                  Tiếp tục mua sắm
+                  Có
                 </button>
                 <button
-                  onClick={() => {
-                    setPaymentConfirmed(false);
-                    navigate(`/orders/user/${userId}`);
-                  }}
+                  onClick={() => setIsModalOpen(false)}
                   style={{
-                    marginLeft: "30px",
-                    width: "250px",
+                    marginLeft: "60px",
+                    width: "100px",
                     height: "40px",
                     borderRadius: "5px",
                     fontWeight: "bold",
-                    backgroundColor: "#dfe6e9",
-                    borderColor: "#dfe6e9",
+                    backgroundColor: "#fc5c65",
+                    borderColor: "#fc5c65",
                   }}
                 >
-                  Xem chi tiết đơn hàng
+                  Không
                 </button>
               </div>
             </Modal>
-          )}
+            {paymentConfirmed && (
+              <Modal
+                isOpen={paymentConfirmed}
+                onRequestClose={() => setPaymentConfirmed(false)}
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  },
+                  content: {
+                    width: "500px",
+                    height: "250px",
+                    margin: "auto",
+                    fontSize: "17px",
+                  },
+                }}
+              >
+                <h3
+                  style={{
+                    textAlign: "center",
+                    marginBottom: "30px",
+                    marginTop: "15px",
+                  }}
+                >
+                  ĐẶT HÀNG THÀNH CÔNG
+                </h3>
+                <p style={{ textAlign: "center", marginBottom: "50px" }}>
+                  Bạn đã đặt đơn hàng thành công
+                </p>
+                <div style={{ display: "flex" }}>
+                  <button
+                    onClick={() => {
+                      setPaymentConfirmed(false);
+                      navigate("/");
+                    }}
+                    style={{
+                      marginLeft: "30px",
+                      width: "250px",
+                      height: "40px",
+                      borderRadius: "5px",
+                      fontWeight: "bold",
+                      backgroundColor: "#7efff5",
+                      borderColor: "#7efff5",
+                    }}
+                  >
+                    Tiếp tục mua sắm
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPaymentConfirmed(false);
+                      navigate(`/orders/user/${userId}`);
+                    }}
+                    style={{
+                      marginLeft: "30px",
+                      width: "250px",
+                      height: "40px",
+                      borderRadius: "5px",
+                      fontWeight: "bold",
+                      backgroundColor: "#dfe6e9",
+                      borderColor: "#dfe6e9",
+                    }}
+                  >
+                    Xem chi tiết đơn hàng
+                  </button>
+                </div>
+              </Modal>
+            )}
+          </div>
         </div>
-      </div>
-      <div className='image'>
-      <div className=" bank-images">
-        <div>
-            <h5 style={{marginBottom: '30px', marginLeft: '50px'}}>Chấp nhận thẻ của các ngân hàng:</h5>
-            <div className="bank-row">
-              <img src={require('../../images/ACB.png')} alt="ACB" />
-              <img src={require('../../images/BIDV.jpg')} alt="BIDV" />
-              <img src={require('../../images/MBBank.png')} alt="MBBank" />
-              <img src={require('../../images/NamABank.png')} alt="NamABank" />
-            </div>
-            <div className="bank-row">
-              <img src={require('../../images/TPBank.png')} alt="TPBank" />
-              <img src={require('../../images/VPBank.png')} alt="VPBank" />
-              <img src={require('../../images/Vietcombank.jpg')} alt="Vietcombank" />
-              <img src={require('../../images/Viettinbank.png')} alt="ViettinBank" />
-            </div>
-            <div className="bank-row">
-            <img src={require('../../images/SeABank.png')} alt="SeABank" />
-              <img src={require('../../images/agribank.png')} alt="Agribank" />
-              <img src={require('../../images/Techcombank.png')} alt="Techcombank" />
-              <img src={require('../../images/sacombank.png')} alt="Sacombank" />
-            </div>
-            </div>
-            </div>
-            <div className='ewallet'>
-              <h5 style={{marginBottom:'30px'}}>Chấp nhận các ví điện tử:</h5>
-              <div className="bank-row-1">
-                <img src={require('../../images/Momo.png')} alt="Momo" />
-                <img src={require('../../images/ZaloPay.png')} alt="ZaloPay" />
+        <div className="image">
+          <div className=" bank-images">
+            <div>
+              <h5 style={{ marginBottom: "30px", marginLeft: "50px" }}>
+                Chấp nhận thẻ của các ngân hàng:
+              </h5>
+              <div className="bank-row">
+                <img src={require("../../images/ACB.png")} alt="ACB" />
+                <img src={require("../../images/BIDV.jpg")} alt="BIDV" />
+                <img src={require("../../images/MBBank.png")} alt="MBBank" />
+                <img
+                  src={require("../../images/NamABank.png")}
+                  alt="NamABank"
+                />
               </div>
-            </div>
-            <div className='paymentPort' >
-              <h5 style={{marginBottom:'30px'}} >Chấp nhận thanh toán qua cổng thanh toán: </h5>
-              <div className="bank-row-2">
-                <img src={require('../../images/VNPay.png')} alt="VNPay" />
+              <div className="bank-row">
+                <img src={require("../../images/TPBank.png")} alt="TPBank" />
+                <img src={require("../../images/VPBank.png")} alt="VPBank" />
+                <img
+                  src={require("../../images/Vietcombank.jpg")}
+                  alt="Vietcombank"
+                />
+                <img
+                  src={require("../../images/Viettinbank.png")}
+                  alt="ViettinBank"
+                />
               </div>
-            </div>
+              <div className="bank-row">
+                <img src={require("../../images/SeABank.png")} alt="SeABank" />
+                <img
+                  src={require("../../images/agribank.png")}
+                  alt="Agribank"
+                />
+                <img
+                  src={require("../../images/Techcombank.png")}
+                  alt="Techcombank"
+                />
+                <img
+                  src={require("../../images/sacombank.png")}
+                  alt="Sacombank"
+                />
+              </div>
             </div>
           </div>
-
+          <div className="ewallet">
+            <h5 style={{ marginBottom: "30px" }}>Chấp nhận các ví điện tử:</h5>
+            <div className="bank-row-1">
+              <img src={require("../../images/Momo.png")} alt="Momo" />
+              <img src={require("../../images/ZaloPay.png")} alt="ZaloPay" />
+            </div>
+          </div>
+          <div className="paymentPort">
+            <h5 style={{ marginBottom: "30px" }}>
+              Chấp nhận thanh toán qua cổng thanh toán:{" "}
+            </h5>
+            <div className="bank-row-2">
+              <img src={require("../../images/VNPay.png")} alt="VNPay" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
