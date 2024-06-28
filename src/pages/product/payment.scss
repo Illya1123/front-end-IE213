@@ -158,3 +158,26 @@ label {
     justify-content: center;
     align-items: center;
   }
+
+  .custom-select {
+    width: 200px; /* Điều chỉnh độ rộng của Select theo ý muốn */
+  }
+  
+  .custom-select .select__control {
+    height: auto; /* Chiều cao tự động theo nội dung đã chọn */
+  }
+  
+  .custom-select .select__menu {
+    max-height: 200px; /* Chiều cao tối đa của danh sách dropdown */
+    overflow-y: auto; /* Cho phép cuộn nếu danh sách quá dài */
+  }
+  
+  .custom-select .select__menu-list {
+    max-height: 200px; /* Điều chỉnh chiều cao tối đa của danh sách dropdown */
+  }
+  
+  .custom-select .select__option {
+    padding: 8px 12px; /* Khoảng cách giữa các lựa chọn trong danh sách */
+    font-size: 14px; /* Điều chỉnh kích cỡ chữ cho các lựa chọn */
+  }
+  

@@ -1,4 +1,5 @@
 import Header from "./header";
 import Footer from "./footer";
 import Auth from "./auth";
-export {Header, Footer, Auth};
+import { country } from "./dataLocation";
+export {Header, Footer, Auth, country};

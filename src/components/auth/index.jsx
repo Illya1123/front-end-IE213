@@ -96,6 +96,7 @@ const Auth = () => {
             <span>{username}</span>
           </div>
           <ul className="dropdown-menu">
+            <li><a className="dropdown-item" href="/orders">Xem đơn hàng</a></li>
             <li onClick={() => setUsername(null)}><a className="dropdown-item" href="#">Đăng xuất</a></li>
           </ul>
         </div>
