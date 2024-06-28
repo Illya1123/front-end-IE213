@@ -1,4 +1,3 @@
-
 import "./styles.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
@@ -32,12 +31,11 @@ const Header = () => {
           return response.json();
         })
         .then((data) => {
-          dispatch(setCartAction(data.data)); // Lưu dữ liệu giỏ hàng vào Redux store
+          dispatch(setCartAction(data.data));
           console.log("Data received:", data.data);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
-          // Xử lý lỗi ở đây nếu cần
         });
     }
   }, [userId, dispatch]);
@@ -59,6 +57,37 @@ const Header = () => {
 
   const toggleCartDropdown = () => {
     setShowCartDropdown((prevState) => !prevState);
+  };
+
+  const removeFromCart = (userId, productId) => {
+    fetch(`http://localhost:3000/carts/${userId}/${productId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        fetch(`http://localhost:3000/carts/user/${userId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            dispatch(setCartAction(data.data)); // Lưu dữ liệu giỏ hàng vào Redux store
+            console.log("Data received after deletion:", data.data);
+          })
+          .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
   };
 
   return (
@@ -131,34 +160,58 @@ const Header = () => {
         <div className="nav-item" onClick={toggleCartDropdown}>
           <i className="bi bi-cart-fill"></i>
           <div className={`cart-dropdown ${showCartDropdown ? "show" : ""}`}>
-  {cartData.length > 0 ? (
-    <ul>
-      {cartData.map((cartItem) =>
-        cartItem.products.map((product) => (
-          <Link to={`/products/${product.skuId}`}>
-            <li key={product.productId}>
-              <div className="product-container" style={{ borderRadius: '5px' }}>
-                <img
-                  src={`https://images.thinkgroup.vn/unsafe/100x100/https://media-api-beta.thinkpro.vn/${product.img}`}
-                  alt={`Hình ảnh về ${product.name}`}
-                  className="product-image"
-                />
-                <div className="product-info">
-                  <span className="name">
-                    Tên sản phẩm: {product.name}
-                  </span>
+            {cartData && cartData.length > 0 ? (
+              <ul>
+                {cartData.map((cartItem) =>
+                  cartItem.products.map((product) => (
+                    <li key={product.productId}>
+                      <div className="product-container">
+                        <img
+                          src={`https://images.thinkgroup.vn/unsafe/100x100/https://media-api-beta.thinkpro.vn/${product.img}`}
+                          alt={`Hình ảnh về ${product.name}`}
+                          className="product-image"
+                        />
+                        <div className="product-info">
+                          <span className="name">
+                            Tên sản phẩm: {product.name}
+                          </span>
+                        </div>
+                        <div className="action">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() =>
+                              removeFromCart(userId, product.productId)
+                            }
+                          >
+                            Xóa
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))
+                )}
+              </ul>
+            ) : (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
+                    alt="Giỏ hàng trống"
+                    className="h-40 w-40"
+                  />
                 </div>
-              </div>
-            </li>
-          </Link>
-        ))
-      )}
-    </ul>
-  ) : (
-    <p>Giỏ hàng của bạn hiện đang trống.</p>
-  )}
-</div>
-
+                <p style={{ textAlign: "center" }}>
+                  Giỏ hàng của bạn hiện đang trống.
+                </p>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
